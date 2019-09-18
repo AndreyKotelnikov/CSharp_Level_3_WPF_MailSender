@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSender"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Mail Sender" Height="450" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Создать"/>
+                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Сохранить"/>
+                <Separator/>
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+            <MenuItem Header="Сервис" IsEnabled="False"/>
+            <MenuItem Header="Помощь" IsEnabled="False"/>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock>
+                Приложение готово к работе!
+            </TextBlock>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Списки"/>
+            <TabItem Header="Планировщик"/>
+            <TabItem Header="Почта"/>
+            <TabItem Header="Статистика"/>
+        </TabControl>
+    </DockPanel>
 </Window>
