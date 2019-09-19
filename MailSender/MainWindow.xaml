@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:MailSender"
         mc:Ignorable="d"
         Title="Mail Sender" Height="450" Width="800">
@@ -24,7 +25,98 @@
             </TextBlock>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Списки"/>
+            <TabItem Header="Списки">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ToolBarTray Grid.Row="0">
+                        <ToolBarTray.Resources>
+                            <Style TargetType="Image">
+                                <Setter Property="Height" Value="16"/>
+                                <Setter Property="Margin" Value="0, 0 , 3, 0"/>
+                            </Style>
+                            <Style TargetType="fa:ImageAwesome">
+                                <Setter Property="Height" Value="16"/>
+                                <Setter Property="Margin" Value="0, 0 , 3, 0"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ToolBarTray.Resources>
+                        <ToolBar>
+                            <Label Content="Сервера"/>
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem>Сервер 1</ComboBoxItem>
+                                <ComboBoxItem>Сервер 2</ComboBoxItem>
+                                <ComboBoxItem>Сервер 3</ComboBoxItem>
+                            </ComboBox>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Media/Add.png"/>
+                                    <TextBlock>Add</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Media/Edit.png"/>
+                                    <TextBlock>Edit</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Media/Delete.png"/>
+                                    <TextBlock>Delete</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </ToolBar>
+                        <ToolBar Band="1">
+                            <Label Content="Отправители"/>
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem>Отправитель 1</ComboBoxItem>
+                                <ComboBoxItem>Отправитель 2</ComboBoxItem>
+                                <ComboBoxItem>Отправитель 3</ComboBoxItem>
+                            </ComboBox>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="Plus" Foreground="GreenYellow"/>
+                                    <TextBlock>Add</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="Edit" Foreground="DarkBlue"/>
+                                    <TextBlock>Edit</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:ImageAwesome Icon="times" Foreground="Red"/>
+                                    <TextBlock>Delete</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </ToolBar>
+                        <ToolBar>
+                            <Label>Перейти в планировщик</Label>
+                            <Button>Перейти</Button>
+                        </ToolBar>
+                        <ToolBar Band="1" BandIndex="1">
+                            <Label Content="Список адресатов"/>
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem>Адресат 1</ComboBoxItem>
+                                <ComboBoxItem>Адресат 2</ComboBoxItem>
+                                <ComboBoxItem>Адресат 3</ComboBoxItem>
+                            </ComboBox>
+                            <Button Content="Add"/>
+                            <Button Content="Edit"/>
+                            <Button Content="Delete"/>
+                        </ToolBar>
+                    </ToolBarTray>
+                </Grid>
+            </TabItem>
             <TabItem Header="Планировщик"/>
             <TabItem Header="Почта"/>
             <TabItem Header="Статистика"/>
