@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MailSender.Lib.Data
 {
-    class Sender
+    public class Sender
     {
         public string Name { get; set; }
 

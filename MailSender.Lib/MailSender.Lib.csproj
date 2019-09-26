@@ -46,6 +46,7 @@
     <Compile Include="Data\Recipient.cs" />
     <Compile Include="Data\Sender.cs" />
     <Compile Include="Data\Server.cs" />
+    <Compile Include="Data\TestData.cs" />
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

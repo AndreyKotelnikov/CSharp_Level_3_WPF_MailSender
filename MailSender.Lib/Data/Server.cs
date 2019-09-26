@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MailSender.Lib.Data
 {
-    class Server
+    public class Server
     {
         public string Name { get; set; }
 
