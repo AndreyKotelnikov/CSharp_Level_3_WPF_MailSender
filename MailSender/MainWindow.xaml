@@ -202,19 +202,21 @@
                                 <Button>New</Button>
                                 <Button>Delete</Button>
                             </UniformGrid>
-                            <ListBox>
-                                <ListBoxItem>Письмо 1</ListBoxItem>
-                                <ListBoxItem>Письмо 2</ListBoxItem>
-                                <ListBoxItem>Письмо 3</ListBoxItem>
+                            <ListBox x:Name="MessagesList" ItemsSource="{x:Static data:TestData.MailMessages}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Subject}" ToolTip="{Binding Body}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
                             </ListBox>
                         </DockPanel>
                     </GroupBox>
                     <DockPanel Grid.Column="1">
                         <GroupBox DockPanel.Dock="Top" Header="Тема">
-                            <TextBox></TextBox>
+                            <TextBox Text="{Binding  SelectedItem.Subject,  ElementName=MessagesList}"></TextBox>
                         </GroupBox>
                         <GroupBox DockPanel.Dock="Top" Header="Тело">
-                            <TextBox AcceptsReturn="True"></TextBox>
+                            <TextBox Text="{Binding  SelectedItem.Body,  ElementName=MessagesList}" AcceptsReturn="True"></TextBox>
                         </GroupBox>
                     </DockPanel>
                     
