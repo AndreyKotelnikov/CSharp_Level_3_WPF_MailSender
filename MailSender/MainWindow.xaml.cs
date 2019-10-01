@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MailSender.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +26,30 @@ namespace MailSender
             InitializeComponent();
         }
 
+        private void TabController_LeftButtonClick(object sender, EventArgs e)
+        {
+            if(!(sender is TabController tabController)) { return; }
+
+            if(tabController.IsLeftButtonVisible)
+            {
+                MainTabControl.SelectedIndex--;
+            }
+
+            tabController.IsLeftButtonVisible = MainTabControl.SelectedIndex > 0;
+            tabController.IsRightButtonVisible = MainTabControl.SelectedIndex < MainTabControl.Items.Count - 1;
+        }
+
+        private void TabController_RightButtonClick(object sender, EventArgs e)
+        {
+            if (!(sender is TabController tabController)) { return; }
+
+            if (tabController.IsRightButtonVisible)
+            {
+                MainTabControl.SelectedIndex++;
+            }
+
+            tabController.IsLeftButtonVisible = MainTabControl.SelectedIndex > 0;
+            tabController.IsRightButtonVisible = MainTabControl.SelectedIndex < MainTabControl.Items.Count - 1;
+        }
     }
 }

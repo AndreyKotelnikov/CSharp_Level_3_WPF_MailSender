@@ -6,7 +6,9 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:data="clr-namespace:MailSender.Lib.Data;assembly=MailSender.Lib" 
+        xmlns:dataLINQ="clr-namespace:MailSender.Lib.Data.LINQ2SQL;assembly=MailSender.Lib" 
         xmlns:local="clr-namespace:MailSender"
+        xmlns:cmp="clr-namespace:MailSender.Components"
         
         mc:Ignorable="d"
         Title="Mail Sender" Height="450" Width="800">
@@ -26,8 +28,11 @@
             <TextBlock>
                 Приложение готово к работе!
             </TextBlock>
+            <StatusBarItem HorizontalAlignment="Right">
+                <cmp:TabController Width="200" IsLeftButtonVisible="False" LeftButtonClick="TabController_LeftButtonClick" RightButtonClick="TabController_RightButtonClick"/>
+            </StatusBarItem>
         </StatusBar>
-        <TabControl>
+        <TabControl x:Name="MainTabControl">
             <TabItem Header="Списки">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -137,12 +142,20 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Grid.Row="1" Header="Получатели писем">
-                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True">
+                        <GroupBox.Resources>
+                            <dataLINQ:MailSenderDBContextDataContext x:Key="DataBaseContext"/>
+                        </GroupBox.Resources>
+                        <DataGrid AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  ItemsSource="{Binding Recipient, Source={StaticResource DataBaseContext}}" 
+                                  GridLinesVisibility="Vertical"
+                                  AlternatingRowBackground="LightGray"
+                                  VerticalGridLinesBrush="Gray">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="20"/>
-                                <DataGridTextColumn Header="ФИО" MinWidth="150"/>
-                                <DataGridTextColumn Header="Email" MinWidth="150"/>
-                                <DataGridTextColumn Header="Комментарий" Width="*"/>
+                                <DataGridTextColumn Header="ID" MinWidth="20" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="ФИО" MinWidth="150" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Email" MinWidth="150" Binding="{Binding Adress}"/>
+                                <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Description}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
@@ -219,8 +232,8 @@
                             <TextBox Text="{Binding  SelectedItem.Body,  ElementName=MessagesList}" AcceptsReturn="True"></TextBox>
                         </GroupBox>
                     </DockPanel>
-                    
-                </Grid> 
+
+                </Grid>
             </TabItem>
             <TabItem Header="Статистика" IsEnabled="False"/>
         </TabControl>
