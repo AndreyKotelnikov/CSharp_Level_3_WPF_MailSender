@@ -191,6 +191,7 @@
                                 <TextBlock>Отправить</TextBlock>
                             </StackPanel>
                         </Button>
+                        <Button Style="{DynamicResource ButtonStyleIndicator}">Button</Button>
                     </StackPanel>
 
                     <GroupBox Header="Запланированные задания">
@@ -215,7 +216,7 @@
                                 <Button>New</Button>
                                 <Button>Delete</Button>
                             </UniformGrid>
-                            <ListBox x:Name="MessagesList" ItemsSource="{x:Static data:TestData.MailMessages}">
+                            <ListBox x:Name="MessagesList" ItemsSource="{x:Static data:TestData.MailMessages}" SelectedIndex="0">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Subject}" ToolTip="{Binding Body}"/>
@@ -229,7 +230,7 @@
                             <TextBox Text="{Binding  SelectedItem.Subject,  ElementName=MessagesList}"></TextBox>
                         </GroupBox>
                         <GroupBox DockPanel.Dock="Top" Header="Тело">
-                            <TextBox Text="{Binding  SelectedItem.Body,  ElementName=MessagesList}" AcceptsReturn="True"></TextBox>
+                            <TextBox Text="{Binding  SelectedItem.Body,  ElementName=MessagesList}" AcceptsReturn="True" VerticalContentAlignment="Top"></TextBox>
                         </GroupBox>
                     </DockPanel>
 
