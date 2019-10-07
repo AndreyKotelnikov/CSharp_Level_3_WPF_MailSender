@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSender.WpfTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="{Binding Title}" 
+        Height="450" 
+        Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <BulletDecorator VerticalAlignment="Center" >
+                <BulletDecorator.Bullet >
+                    <TextBlock  Margin="3,0">Заголовок окна:</TextBlock>
+                </BulletDecorator.Bullet>
+            </BulletDecorator>
+            <TextBox Margin="3,0" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <Slider  DockPanel.Dock="Top" Maximum="400" Value="{Binding Position}"/>
+        <Slider DockPanel.Dock="Top" Maximum="360" Value="{Binding Angle}"/>
+        <Canvas DockPanel.Dock="Top">
+            <Button Content="{Binding Time, StringFormat='YYYY/mm/dd' }"  
+                    Margin="30, 30, 0, 0" 
+                    Canvas.Left="{Binding Position}" 
+                    RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <RotateTransform Angle="{Binding Angle}"/>
+                </Button.RenderTransform>
+            </Button>
+        </Canvas>
+
+
+
+    </DockPanel>
 </Window>

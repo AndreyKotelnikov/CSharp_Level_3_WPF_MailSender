@@ -24,5 +24,7 @@ namespace MailSender.WpfTest
         {
             InitializeComponent();
         }
+
+        
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Data\Server.cs" />
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
+    <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
