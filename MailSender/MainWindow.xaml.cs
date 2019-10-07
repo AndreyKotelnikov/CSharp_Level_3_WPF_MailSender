@@ -52,5 +52,6 @@ namespace MailSender
             tabController.IsLeftButtonVisible = MainTabControl.SelectedIndex > 0;
             tabController.IsRightButtonVisible = MainTabControl.SelectedIndex < MainTabControl.Items.Count - 1;
         }
+
     }
 }

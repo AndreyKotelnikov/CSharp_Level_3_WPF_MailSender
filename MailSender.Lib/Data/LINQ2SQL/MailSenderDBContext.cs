@@ -1,6 +1,7 @@
-namespace MailSender.Lib
+namespace MailSender.Lib.Data.LINQ2SQL
 {
-    partial class MailSenderDBContextDataContext
+    public partial class MailSenderDBContext
     {
+
     }
 }

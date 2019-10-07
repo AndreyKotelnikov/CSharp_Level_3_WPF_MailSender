@@ -65,6 +65,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\Linq2SQL\IRecipientsDataService.cs" />
+    <Compile Include="Services\Linq2SQL\RecipientsDataServiceLinq2SQL.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

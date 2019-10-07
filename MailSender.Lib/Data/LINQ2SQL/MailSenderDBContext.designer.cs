@@ -23,7 +23,7 @@ namespace MailSender.Lib.Data.LINQ2SQL
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MailSender.db")]
-	public partial class MailSenderDBContextDataContext : System.Data.Linq.DataContext
+	public partial class MailSenderDBContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -35,31 +35,31 @@ namespace MailSender.Lib.Data.LINQ2SQL
     partial void DeleteRecipient(Recipient instance);
     #endregion
 		
-		public MailSenderDBContextDataContext() : 
+		public MailSenderDBContext() : 
 				base(global::MailSender.Lib.Properties.Settings.Default.MailSender_dbConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MailSenderDBContextDataContext(string connection) : 
+		public MailSenderDBContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MailSenderDBContextDataContext(System.Data.IDbConnection connection) : 
+		public MailSenderDBContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MailSenderDBContextDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MailSenderDBContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public MailSenderDBContextDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public MailSenderDBContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

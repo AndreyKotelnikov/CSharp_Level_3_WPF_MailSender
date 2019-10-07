@@ -9,9 +9,12 @@
         xmlns:dataLINQ="clr-namespace:MailSender.Lib.Data.LINQ2SQL;assembly=MailSender.Lib" 
         xmlns:local="clr-namespace:MailSender"
         xmlns:cmp="clr-namespace:MailSender.Components"
-        
+        xmlns:view="clr-namespace:MailSender.View"
         mc:Ignorable="d"
-        Title="Mail Sender" Height="450" Width="800">
+        Title="{Binding Title}" 
+        Height="650" 
+        Width="800"
+        DataContext="{Binding  MainWindowViewModel, Source={StaticResource Locator}}">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -25,9 +28,7 @@
             <MenuItem Header="Помощь" IsEnabled="False"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
-            <TextBlock>
-                Приложение готово к работе!
-            </TextBlock>
+            <TextBlock Text="{Binding Status}"/>
             <StatusBarItem HorizontalAlignment="Right">
                 <cmp:TabController Width="200" IsLeftButtonVisible="False" LeftButtonClick="TabController_LeftButtonClick" RightButtonClick="TabController_RightButtonClick"/>
             </StatusBarItem>
@@ -141,24 +142,7 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Grid.Row="1" Header="Получатели писем">
-                        <GroupBox.Resources>
-                            <dataLINQ:MailSenderDBContextDataContext x:Key="DataBaseContext"/>
-                        </GroupBox.Resources>
-                        <DataGrid AutoGenerateColumns="False" 
-                                  IsReadOnly="True" 
-                                  ItemsSource="{Binding Recipient, Source={StaticResource DataBaseContext}}" 
-                                  GridLinesVisibility="Vertical"
-                                  AlternatingRowBackground="LightGray"
-                                  VerticalGridLinesBrush="Gray">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="20" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="ФИО" MinWidth="150" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Email" MinWidth="150" Binding="{Binding Adress}"/>
-                                <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Description}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <view:RecipientsInfoViewer Grid.Row="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Планировщик">
