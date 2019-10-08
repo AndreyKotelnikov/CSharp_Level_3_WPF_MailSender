@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i ="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:MailSender.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
              DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding UpdateDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <TextBlock Text="Получатели писем"
                    DockPanel.Dock="Top"
@@ -15,6 +21,7 @@
                    Margin="0, 5"
                    FontSize="20"
                    FontWeight="Bold"/>
+        
         <DockPanel DockPanel.Dock="Top"
                    Margin="5, 0">
             <TextBlock Text="Поиск"
@@ -22,17 +29,20 @@
                        VerticalAlignment="Center"/>
             <TextBox/>
         </DockPanel>
+        
         <Button DockPanel.Dock="Bottom" 
                 Content="Обновить"
                 HorizontalAlignment="Center"
                 Margin="0, 5"
                 Command="{Binding UpdateDataCommand}"/>
+        
         <DataGrid AutoGenerateColumns="False" 
-                IsReadOnly="True" 
-                ItemsSource="{Binding Recipients}" 
-                GridLinesVisibility="Vertical"
-                AlternatingRowBackground="LightGray"
-                VerticalGridLinesBrush="Gray">
+                  IsReadOnly="True" 
+                  ItemsSource="{Binding Recipients}" 
+                  GridLinesVisibility="Vertical"
+                  AlternatingRowBackground="LightGray"
+                  VerticalGridLinesBrush="Gray"
+                  SelectedItem="{Binding CurrentRecipient}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" MinWidth="20" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="ФИО" MinWidth="150" Binding="{Binding Name}"/>

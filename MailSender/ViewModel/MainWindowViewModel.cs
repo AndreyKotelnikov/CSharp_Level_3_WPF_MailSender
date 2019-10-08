@@ -36,6 +36,9 @@ namespace MailSender.ViewModel
         public MainWindowViewModel(IRecipientsDataService recipientsDataService)
         {
             _RecipientsDataService = recipientsDataService;
+            UpdateDataCommand = new RelayCommand(UpdateData, CanExecute);
+            CreateDataCommand = new RelayCommand(OnCreateDataCommandExcuted, CanExecute);
+            SaveDataCommand = new RelayCommand<Recipient>(o => _RecipientsDataService.Update(o), CanSave());
             //UpdateData();
         }
         
@@ -49,10 +52,38 @@ namespace MailSender.ViewModel
 
         private void UpdateData()
         {
-            _Recipients = new ObservableCollection<Recipient>(_RecipientsDataService.GetAll());
+            Recipients = new ObservableCollection<Recipient>(_RecipientsDataService.GetAll());
         }
 
-        public ICommand UpdateDataCommand => new RelayCommand(UpdateData, true);
+        public ICommand UpdateDataCommand { get; }
+
+        private bool CanExecute() => true;
+
+        private Recipient _CurrentRecipient;
         
+        public Recipient CurrentRecipient
+        {
+            get => _CurrentRecipient;
+            set => Set(ref _CurrentRecipient, value);
+        }
+
+        public ICommand SaveDataCommand { get; }
+
+        private bool CanSave() => CurrentRecipient != null;
+
+        public ICommand CreateDataCommand { get; }
+
+        private void OnCreateDataCommandExcuted()
+        {
+            Recipient newRecipient = new Recipient()
+            {
+                Name = string.Empty,
+                Adress = string.Empty
+            };
+            _RecipientsDataService.Create(newRecipient);
+            Recipients.Add(newRecipient);
+            CurrentRecipient = newRecipient;
+        }
+
     }
 }
