@@ -14,7 +14,7 @@ namespace MailSender.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IRecipientsDataService _RecipientsDataService;
+        private readonly ICRUDDataService _RecipientsDataService;
 
 
         public string _Title = "Рассыльщик почты";
@@ -33,7 +33,7 @@ namespace MailSender.ViewModel
             set => Set(ref _Status, value);
         }
 
-        public MainWindowViewModel(IRecipientsDataService recipientsDataService)
+        public MainWindowViewModel(ICRUDDataService recipientsDataService)
         {
             _RecipientsDataService = recipientsDataService;
             UpdateDataCommand = new RelayCommand(UpdateData, CanExecute);

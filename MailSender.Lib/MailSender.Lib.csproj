@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MailSender.Lib.Key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Additions\ExtensionMethods.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Data\LINQ2SQL\MailSenderDBContext.cs">
       <DependentUpon>MailSenderDBContext.dbml</DependentUpon>
@@ -65,7 +72,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Services\Linq2SQL\IRecipientsDataService.cs" />
+    <Compile Include="Services\InMemory\RecipientsDataServiceInMemory.cs" />
+    <Compile Include="Services\Linq2SQL\ICRUDDataService.cs" />
     <Compile Include="Services\Linq2SQL\RecipientsDataServiceLinq2SQL.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -79,6 +87,7 @@
     <None Include="Data\LINQ2SQL\MailSenderDBContext.dbml.layout">
       <DependentUpon>MailSenderDBContext.dbml</DependentUpon>
     </None>
+    <None Include="MailSender.Lib.Key.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

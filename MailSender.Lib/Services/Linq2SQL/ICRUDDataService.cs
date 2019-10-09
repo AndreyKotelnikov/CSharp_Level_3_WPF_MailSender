@@ -3,9 +3,11 @@ using MailSender.Lib.Data.LINQ2SQL;
 
 namespace MailSender.Lib.Services.Linq2SQL
 {
-    public interface IRecipientsDataService
+    public interface ICRUDDataService
     {
         IEnumerable<Recipient> GetAll();
+
+        Recipient GetById(int id);
 
         void Create(Recipient item);
 

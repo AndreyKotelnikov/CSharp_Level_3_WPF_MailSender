@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MailSender.Lib.Services.Linq2SQL
 {
-    public class RecipientsDataServiceLinq2SQL : IRecipientsDataService
+    public class RecipientsDataServiceLinq2SQL : ICRUDDataService
     {
         private readonly MailSenderDBContext _db;
 
@@ -30,6 +30,8 @@ namespace MailSender.Lib.Services.Linq2SQL
         }
 
         public IEnumerable<Recipient> GetAll() => _db.Recipient.ToArray();
+
+        public Recipient GetById(int id) => _db.Recipient.FirstOrDefault(r => r.Id == id);
 
         public void Update(Recipient item)
         {

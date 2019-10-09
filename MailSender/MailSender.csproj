@@ -50,6 +50,10 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="MailSender.Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=36c9136f5fc598a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MailSender.Lib\bin\Debug\MailSender.Lib.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -163,12 +167,6 @@
     <Resource Include="Media\Add.png" />
     <Resource Include="Media\Delete.png" />
     <Resource Include="Media\Edit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MailSender.Lib\MailSender.Lib.csproj">
-      <Project>{184e0c99-8115-4886-8353-c0aa13b3254e}</Project>
-      <Name>MailSender.Lib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
