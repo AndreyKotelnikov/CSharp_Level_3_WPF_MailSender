@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Additions\ExtensionMethods.cs" />
+    <Compile Include="Additions\StringEncryptor.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Data\LINQ2SQL\MailSenderDBContext.cs">
       <DependentUpon>MailSenderDBContext.dbml</DependentUpon>
