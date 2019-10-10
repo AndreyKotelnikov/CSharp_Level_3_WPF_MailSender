@@ -25,7 +25,7 @@
             
       <ControlTemplate  x:Key="ErrorTemplate">
                 <StackPanel Orientation="Horizontal">
-                    <fa:ImageAwesome Icon="Exclamation" Foreground="Red" Width="16" Spin="True" SpinDuration="3"></fa:ImageAwesome>
+                    <fa:ImageAwesome Icon="Exclamation" Foreground="Red" Width="16" Spin="True" SpinDuration="1"></fa:ImageAwesome>
                     <Border BorderBrush="OrangeRed" BorderThickness="3" Padding="4">
                         <Grid>
                             <AdornedElementPlaceholder/>

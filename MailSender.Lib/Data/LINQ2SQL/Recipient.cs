@@ -60,11 +60,11 @@ namespace MailSender.Lib.Data.LINQ2SQL
             });
         }
 
-        partial void OnNameChanging(string value)
-        {
-            if (value is null) throw new ArgumentNullException(nameof(value), "Передана пустая ссылка");
+        //partial void OnNameChanging(string value)
+        //{
+        //    if (value is null) throw new ArgumentNullException(nameof(value), "Передана пустая ссылка");
 
-            if (value.Length <= 3) throw new InvalidOperationException("Строка имени должна быть больше 3-х символов");
-        }
+        //    if (value.Length <= 3) throw new InvalidOperationException("Строка имени должна быть больше 3-х символов");
+        //}
     }
 }
