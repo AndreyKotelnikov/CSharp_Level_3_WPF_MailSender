@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MailSender.View"
+             xmlns:commands="clr-namespace:MailSender.Commands"
              xmlns:vr="clr-namespace:MailSender.ValidationRules"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
@@ -73,6 +74,13 @@
             <Button Content="Create"
                     Margin="5"
                     Command="{Binding CreateDataCommand}"/>
+            <Button Content="Save2"
+                    Margin="5"
+                    CommandParameter="{Binding CurrentRecipient}">
+                <Button.Command>
+                    <commands:SaveDataWithMesageCommand/>
+                </Button.Command>
+            </Button>
         </UniformGrid>
 
     </Grid>

@@ -37,6 +37,7 @@
     <AssemblyOriginatorKeyFile>MailSender.Lib.Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -67,6 +68,7 @@
     <Compile Include="Data\TestData.cs" />
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
+    <Compile Include="MVVM\LamdaCommand.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
