@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MailSender.View"
+             xmlns:vr="clr-namespace:MailSender.ValidationRules"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="159.876" d:DesignWidth="325.553"
              DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
-    <Grid>
+    <Grid Validation.Error="OnDataValidationError">
         <Grid.Resources>
             <Style TargetType="TextBlock">
                 <Style.Setters>
@@ -37,10 +39,27 @@
         <TextBlock Text="ФИО" Grid.Row="1" Grid.Column="0"/>
         <TextBlock Text="E-mail" Grid.Row="2" Grid.Column="0"/>
         <TextBlock Text="Комментарий" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentRecipient.Id}"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentRecipient.Name}"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentRecipient.Adress}"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentRecipient.Description}"/>
+        <TextBox Grid.Row="0" 
+                 Grid.Column="1" 
+                 Text="{Binding CurrentRecipient.Id, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Row="1" 
+                 Grid.Column="1" 
+                 Text="{Binding CurrentRecipient.Name, ValidatesOnExceptions=False, NotifyOnValidationError=True, ValidatesOnDataErrors=True, 
+                        ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="{Binding CurrentRecipient.ErrorCollection[Name]}"
+                 Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+        </TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="CurrentRecipient.Adress" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <vr:RegExValidationRule Pattern="\w+@\W+\.\w+" ErrorMessage="Электронный адрес введён некорректно"/>
+                        <ExceptionValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentRecipient.Description, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
         <UniformGrid Rows="1" 
                      Grid.Row="4" 
                      Grid.ColumnSpan="2"

@@ -22,6 +22,21 @@
           
         </ResourceDictionary>
       </ResourceDictionary.MergedDictionaries>
+            
+      <ControlTemplate  x:Key="ErrorTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Exclamation" Foreground="Red" Width="16" Spin="True" SpinDuration="3"></fa:ImageAwesome>
+                    <Border BorderBrush="OrangeRed" BorderThickness="3" Padding="4">
+                        <Grid>
+                            <AdornedElementPlaceholder/>
+                            <TextBlock Text="{Binding [0].ErrorContent}"
+                                    Foreground="Red"
+                                    HorizontalAlignment="Right"
+                                    />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+      </ControlTemplate>
 
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         

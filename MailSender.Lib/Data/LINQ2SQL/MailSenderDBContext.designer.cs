@@ -20,9 +20,9 @@ namespace MailSender.Lib.Data.LINQ2SQL
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
-	
-	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MailSender.db")]
+    using System.ComponentModel.DataAnnotations;
+
+    [global::System.Data.Linq.Mapping.DatabaseAttribute(Name="MailSender.db")]
 	public partial class MailSenderDBContext : System.Data.Linq.DataContext
 	{
 		
@@ -140,7 +140,7 @@ namespace MailSender.Lib.Data.LINQ2SQL
 				{
 					this.OnNameChanging(value);
 					this.SendPropertyChanging();
-					this._Name = value;
+                    this._Name = value;
 					this.SendPropertyChanged("Name");
 					this.OnNameChanged();
 				}
@@ -168,6 +168,8 @@ namespace MailSender.Lib.Data.LINQ2SQL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+        
+        [Required(ErrorMessage = "Нужен комментарий")]
 		public string Description
 		{
 			get
@@ -180,7 +182,8 @@ namespace MailSender.Lib.Data.LINQ2SQL
 				{
 					this.OnDescriptionChanging(value);
 					this.SendPropertyChanging();
-					this._Description = value;
+                    ValidateProperty(value, nameof(Description));
+                    this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
 				}
