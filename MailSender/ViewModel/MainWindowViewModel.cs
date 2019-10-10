@@ -38,7 +38,7 @@ namespace MailSender.ViewModel
             _RecipientsDataService = recipientsDataService;
             UpdateDataCommand = new RelayCommand(UpdateData, CanExecute);
             CreateDataCommand = new RelayCommand(OnCreateDataCommandExcuted, CanExecute);
-            SaveDataCommand = new RelayCommand<Recipient>(o => _RecipientsDataService.Update(o), CanSave());
+            SaveDataCommand = new RelayCommand<Recipient>(o => _RecipientsDataService.Update(o), CanSave, true);
             //UpdateData();
         }
         
@@ -69,7 +69,10 @@ namespace MailSender.ViewModel
 
         public ICommand SaveDataCommand { get; }
 
-        private bool CanSave() => CurrentRecipient != null;
+        private bool CanSave(Recipient recipient)
+        {
+            return CurrentRecipient != null && CurrentRecipient.ErrorCollection.Count == 0;
+        }
 
         public ICommand CreateDataCommand { get; }
 
