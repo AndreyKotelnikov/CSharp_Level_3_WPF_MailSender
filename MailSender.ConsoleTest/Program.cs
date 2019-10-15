@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using ThreadState = System.Threading.ThreadState;
 
 namespace MailSender.ConsoleTest
 {
@@ -145,17 +146,359 @@ namespace MailSender.ConsoleTest
 
             #endregion
 
-            TickTock tt = new TickTock();
-            MyThread2 mt1 = new MyThread2("Tick", tt);
-            MyThread2 mt2 = new MyThread2("Tock", tt);
-            mt1.thrd.Join();
-            mt2.thrd.Join();
+            #region Ex6
 
-            Console.WriteLine("Часы остановлены");
+            //TickTock tt = new TickTock();
+            //MyThread2 mt1 = new MyThread2("Tick", tt);
+            //MyThread2 mt2 = new MyThread2("Tock", tt);
+            //mt1.thrd.Join();
+            //mt2.thrd.Join();
+
+            //Console.WriteLine("Часы остановлены");
+            #endregion
+
+            #region Ex7
+
+            //IncThread mt1 = new IncThread("Inc thread", 5);
+            //Console.WriteLine("Создал поток 1");
+            //// разрешить инкременирующему потоку начаться
+            ////Thread.Sleep(1);
+
+            //DecThread mt2 = new DecThread("Dec thread", 5);
+            //Console.WriteLine("Создал поток 2");
+
+            //Console.WriteLine("Жду другие потоки");
+            //mt1.Thrd.Join();
+            //mt2.Thrd.Join();
+
+            #endregion
+
+            #region Ex8
+
+            //ManualResetEvent evtObj = new ManualResetEvent(false);
+
+            //MyThread2 mt1 = new MyThread2("Событийный поток 1", evtObj);
+
+            //Console.WriteLine("Основной поток ожидает событие");
+
+            //evtObj.WaitOne();
+
+            //Console.WriteLine("Основной поток получил уведомление о событии от первого потока");
+
+            //evtObj.Reset();
+
+            //mt1 = new MyThread2("Событийный поток 2", evtObj);
+
+            //evtObj.WaitOne();
+
+            //Console.WriteLine("Основной поток получил уведомление о событии от второго потока");
+
+            #endregion
+
+            #region Ex9
+
+            //const int numberTasks = 2;
+            //const int partitionSize = 1000000;
+            //var data = new List<string>(FillData(partitionSize * numberTasks));
+
+            //var barrier = new Barrier(numberTasks + 1);
+
+            //var taskFactory = new TaskFactory();
+            //var tasks = new Task<int[]>[numberTasks];
+            //for (int i = 0; i < numberTasks; i++)
+            //{
+            //    tasks[i] = taskFactory.StartNew<int[]>(CalculationInTask,
+            //        Tuple.Create(i, partitionSize, barrier, data));
+            //}
+            //barrier.SignalAndWait();
+
+            //var resultCollection = tasks[0].Result.Zip(tasks[1].Result, (c1, c2) => c1 + c2);
+
+            //char ch = 'a';
+            //int sum = 0;
+
+            #endregion
+
+            #region Ex10
+
+            //try
+            //{
+            //    MyThread3 mt1 = new MyThread3("Мой поток");
+            //    Thread.Sleep(1000);
+            //    Console.WriteLine("Прерывание потока");
+
+            //    mt1.Thrd.Abort();
+
+            //    // Ожидание прерывания
+            //    mt1.Thrd.Join();
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message + " " + ((e as ThreadAbortException)?.ExceptionState as Thread)?.ThreadState);
+
+            //}
+
+            //Console.WriteLine("Основной поток прерван");
+            #endregion
+
+            #region Ex11
+
+            //// Делегат для типа Timer
+            //TimerCallback timeCB = new TimerCallback(PrintTime);
+
+            //Timer time = new Timer(timeCB, null, 0, 1000);
+
+            #endregion
+
+            #region Ex12
+
+            int nWorkerThreads;
+            int nCompletionThreads;
+            ThreadPool.GetMaxThreads(out nWorkerThreads, out nCompletionThreads);
+            Console.WriteLine("Максимальное количество потоков: " + nWorkerThreads
+                                                                  + "\nПотоков ввода-вывода доступно: " + nCompletionThreads);
+            for (int i = 0; i < 5; i++)
+                ThreadPool.QueueUserWorkItem(JobForAThread);
+            Thread.Sleep(3000);
+
+            #endregion
+
+
 
             Console.ReadLine();
 
 
+        }
+
+        static void JobForAThread(object state)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine("цикл {0}, выполнение внутри потока из пула {1}",
+                    i, Thread.CurrentThread.ManagedThreadId);
+                Thread.Sleep(50);
+            }
+        }
+
+
+        static void PrintTime(object state)
+        {
+            Console.Clear();
+            Console.WriteLine("Текущее время:  " +
+                              DateTime.Now.ToLongTimeString());
+            Console.WriteLine("\nНажми чтоб выйти");
+        }
+
+        class MyThread3
+        {
+            int num;
+            public Thread Thrd;
+
+            public MyThread3(string name)
+            {
+                Thrd = new Thread(this.Run);
+                Thrd.Name = name;
+                Thrd.Start();
+            }
+
+            // Точка входа в поток
+            void Run()
+            {
+                Console.WriteLine(Thrd.Name + " начат");
+                try
+                {
+                    for (int i = 1; i <= 1000; i++)
+                    {
+                        Console.Write(i + " ");
+                        if ((i % 10) == 0)
+                        {
+                            Console.WriteLine();
+                            Thread.Sleep(250);
+                        }
+                    }
+                }
+                catch (ThreadAbortException exc)
+                {
+                    Thread.ResetAbort();
+                    //if ((int)exc.ExceptionState == 0)
+                    //{
+                    //    Console.WriteLine("Прерывание отменено! Код завершения: "
+                    //                      + exc.ExceptionState);
+                    //    Thread.ResetAbort();
+                    //}
+                    //else
+                    //    Console.WriteLine("Поток прерван, код завершения "
+                    //                      + exc.ExceptionState);
+                }
+                Console.WriteLine(Thrd.Name + " завершен");
+            }
+        }
+
+
+
+        public static IEnumerable<string> FillData(int size)
+        {
+            List<string> data = new List<string>(size);
+            Random r = new Random();
+            for (int i = 0; i < size; i++)
+                data.Add(GetString(r));
+            return data;
+        }
+
+        private static string GetString(Random r)
+        {
+            StringBuilder sb = new StringBuilder(6);
+            for (int i = 0; i < 6; i++)
+                sb.Append((char)(r.Next(26) + 97));
+            return sb.ToString();
+        }
+
+        static int[] CalculationInTask(object p)
+        {
+            var p1 = p as Tuple<int, int, Barrier, List<string>>;
+            Barrier barrier = p1.Item3;
+            
+            List<string> data = p1.Item4;
+
+            int start = p1.Item1 * p1.Item2;
+            int end = start + p1.Item2;
+
+            Console.WriteLine("Задача {0}: раздел от {1} до {2}",
+                Task.CurrentId, start, end);
+
+            int[] charCount = new int[26];
+            for (int j = start; j < end; j++)
+            {
+                char c = data[j][0];
+                charCount[c - 97]++;
+            }
+
+            Console.WriteLine("Задача {0} завершила вычисление. {1} раз а, {2} раз z",
+                Task.CurrentId, charCount[0], charCount[25]);
+            barrier.RemoveParticipant();
+            Console.WriteLine("Задача {0} удалена; количество оставшихся участников: {1}",
+                Task.CurrentId, barrier.ParticipantsRemaining);
+            return charCount;
+        }
+
+
+        class MyThread2
+        {
+            public Thread Thrd;
+            ManualResetEvent mre;
+
+            public MyThread2(string name, ManualResetEvent evt)
+            {
+                Thrd = new Thread(this.Run);
+                Thrd.Name = name;
+                mre = evt;
+                Thrd.Start();
+            }
+
+            void Run()
+            {
+                Console.WriteLine("Внутри потока " + Thrd.Name);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine(Thrd.Name);
+                    Thread.Sleep(500);
+                }
+
+                Console.WriteLine(Thrd.Name + " завершен!");
+
+                // Уведомление о событии
+                mre.Set();
+            }
+        }
+
+        // В этом классе содержится общий ресурс в виде переменной Count,
+        // а так же мьютекс mtx
+        class SharedRes
+        {
+            public static int Count;
+            public static Mutex mtx = new Mutex();
+        }
+
+        // В этом классе Count инкрементируется
+        class IncThread
+        {
+            int num;
+            public Thread Thrd;
+
+            public IncThread(string name, int n)
+            {
+                Thrd = new Thread(this.Run);
+                num = n;
+                Thrd.Name = name;
+                Thrd.Start();
+            }
+
+            // Точка входа в поток
+            void Run()
+            {
+                Console.WriteLine(Thrd.Name + " ожидает мьютекс");
+
+                // Получить мьютекс
+                //SharedRes.mtx.WaitOne();
+
+                Console.WriteLine(Thrd.Name + " получает мьютекс");
+
+                do
+                {
+                    // Получить мьютекс
+                    SharedRes.mtx.WaitOne();
+                    Thread.Sleep(500);
+                    SharedRes.Count++;
+                    Console.WriteLine("в потоке {0}, Count={1}", Thrd.Name, SharedRes.Count);
+                    SharedRes.mtx.ReleaseMutex();
+                    num--;
+                } while (num > 0);
+
+                Console.WriteLine(Thrd.Name + " освобождает мьютекс");
+
+                //SharedRes.mtx.ReleaseMutex();
+
+            }
+        }
+
+        class DecThread
+        {
+            int num;
+            public Thread Thrd;
+
+            public DecThread(string name, int n)
+            {
+                Thrd = new Thread(new ThreadStart(this.Run));
+                num = n;
+                Thrd.Name = name;
+                Thrd.Start();
+            }
+
+            // Точка входа в поток
+            void Run()
+            {
+                Console.WriteLine(Thrd.Name + " ожидает мьютекс");
+
+                // Получить мьютекс
+                //SharedRes.mtx.WaitOne();
+
+                Console.WriteLine(Thrd.Name + " получает мьютекс");
+
+                do
+                {
+                    SharedRes.mtx.WaitOne();
+                    Thread.Sleep(500);
+                    SharedRes.Count--;
+                    Console.WriteLine("в потоке {0}, Count={1}", Thrd.Name, SharedRes.Count);
+                    SharedRes.mtx.ReleaseMutex();
+                    num--;
+                } while (num > 0);
+
+                Console.WriteLine(Thrd.Name + " освобождает мьютекс");
+
+                //SharedRes.mtx.ReleaseMutex();
+            }
         }
 
         static int DelegateThread(int data, int time)
@@ -278,6 +621,7 @@ namespace MailSender.ConsoleTest
                 {
                     // Остановить часы
                     Monitor.Pulse(lockOn);
+                    
                     return;
                 }
 
