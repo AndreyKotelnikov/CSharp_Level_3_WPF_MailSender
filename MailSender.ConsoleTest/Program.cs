@@ -12,10 +12,8 @@ namespace MailSender.ConsoleTest
 {
     class Program
     {
+
         public delegate int BinaryOp(int x, int y);
-
-        private static AutoResetEvent waitHandle = new AutoResetEvent(false);
-
 
         static void Main(string[] args)
         {
@@ -252,14 +250,226 @@ namespace MailSender.ConsoleTest
 
             #region Ex12
 
-            int nWorkerThreads;
-            int nCompletionThreads;
-            ThreadPool.GetMaxThreads(out nWorkerThreads, out nCompletionThreads);
-            Console.WriteLine("Максимальное количество потоков: " + nWorkerThreads
-                                                                  + "\nПотоков ввода-вывода доступно: " + nCompletionThreads);
-            for (int i = 0; i < 5; i++)
-                ThreadPool.QueueUserWorkItem(JobForAThread);
-            Thread.Sleep(3000);
+            //int nWorkerThreads;
+            //int nCompletionThreads;
+            //ThreadPool.GetMaxThreads(out nWorkerThreads, out nCompletionThreads);
+            //Console.WriteLine("Максимальное количество потоков: " + nWorkerThreads
+            //                                                      + "\nПотоков ввода-вывода доступно: " + nCompletionThreads);
+            //for (int i = 0; i < 5; i++)
+            //    ThreadPool.QueueUserWorkItem(JobForAThread);
+            //Thread.Sleep(3000);
+
+            #endregion
+
+            #region Ex13
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //Task task = new Task(MyTask1);
+
+            //// Запустить задачу
+            //task.Start();
+
+            //for (int i = 0; i < 60; i++)
+            //{
+            //    Console.Write(".");
+            //    Thread.Sleep(100);
+            //}
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex14
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //Task task1 = new Task(MyTask2);
+            //Task task2 = new Task(MyTask2);
+
+            //// Запустить задачу
+            //task1.Start();
+            //task2.Start();
+
+            ////for (int i = 0; i < 60; i++)
+            ////{
+            ////    Console.Write(".");
+            ////    Thread.Sleep(100);
+            ////}
+
+            //Task.WaitAll(task1, task2);
+            //TaskFactory factory = Task.Factory;
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex15
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //// Используем лямбда-выражение
+            //Task task1 = Task.Factory.StartNew(() => {
+            //    Console.WriteLine("MyTask3() №{0} запущен", Task.CurrentId);
+
+            //    for (int count = 0; count < 10; count++)
+            //    {
+            //        Thread.Sleep(500);
+            //        Console.WriteLine("В методе MyTask3 №{0} подсчет равен {1}", Task.CurrentId, count);
+            //    }
+
+            //    Console.WriteLine("MyTask3() #{0} завершен", Task.CurrentId);
+            //});
+
+
+            //task1.Wait();
+            //task1.Dispose();
+            //CancellationToken ct = new CancellationToken();
+            //CancellationTokenSource cts = new CancellationTokenSource();
+
+
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex16
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //// Объект источника признаков отмены
+            //CancellationTokenSource cancelTokSSrc = new CancellationTokenSource();
+
+            //// Запустить задачу, передав ей признак отмены
+            //Task tsk = Task.Factory.StartNew(MyTask3, cancelTokSSrc.Token, cancelTokSSrc.Token);
+
+            //Thread.Sleep(2000);
+            //try
+            //{
+            //    // отменить задачу
+            //    cancelTokSSrc.Cancel();
+            //    tsk.Wait();
+            //}
+            //catch (AggregateException exc)
+            //{
+            //    if (tsk.IsCanceled)
+            //        Console.WriteLine("Задача tsk отменена");
+            //}
+            //finally
+            //{
+            //    tsk.Dispose();
+            //    cancelTokSSrc.Dispose();
+            //}
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex17
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //// Выполнить параллельно оба именованных метода
+            //Parallel.Invoke(MyMeth, MyMeth2);
+            
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex18
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //data = new int[100000000];
+
+            //DateTime start = DateTime.Now;
+
+            //for (int i = 0; i < data.Length; i++)
+            //    data[i] = i;
+
+            //DateTime end = DateTime.Now;
+
+            //Console.WriteLine($"Создание последовательно: {(end - start).TotalSeconds}");
+
+
+            //start = DateTime.Now;
+
+            //for (int i = 0; i < data.Length; i++)
+            //{
+            //    MyTransform(i);
+            //}
+
+            //end = DateTime.Now;
+
+            //Console.WriteLine($"Последовательно: {(end - start).TotalSeconds}");
+
+            //data = new int[100000000];
+
+            //start = DateTime.Now;
+
+            //// Распараллелить цикл методом For()
+            //Parallel.For(0, data.Length, (i) => data[i] = i);
+
+            //end = DateTime.Now;
+
+            //Console.WriteLine($"Создание параллельно: {(end - start).TotalSeconds}");
+
+            //start = DateTime.Now;
+
+            //// Распараллелить цикл методом For()
+            //Parallel.For(0, data.Length, MyTransform);
+
+            //end = DateTime.Now;
+
+            //Console.WriteLine($"Параллельно: {(end - start).TotalSeconds}");
+
+            //Console.WriteLine("Основной поток завершен");
+
+            #endregion
+
+            #region Ex19
+
+            //Console.WriteLine("Основной поток запущен");
+
+            //// Время выполнения цикла
+            //Stopwatch sw = new Stopwatch();
+
+            //data = new int[100000000];
+
+            //sw.Start();
+
+            //// Параллельный вариант инициализации массива в цикле
+            //Parallel.For(0, data.Length, (i) => data[i] = i);
+
+            //sw.Stop();
+            //Console.WriteLine("|| исполнение цикла: {0} секунд", sw.Elapsed.TotalSeconds);
+            //sw.Reset();
+
+            //sw.Start();
+            //for (int i = 0; i < data.Length; i++)
+            //    data[i] = i;
+            //sw.Stop();
+            //Console.WriteLine("Последовательное исполнение цикла: {0} секунд", sw.Elapsed.TotalSeconds);
+            //sw.Reset();
+            //Console.WriteLine();
+
+            //sw.Start();
+            //// Распараллелить цикл методом For()
+            //Parallel.For(0, data.Length, MyTransform);
+            //sw.Stop();
+            //Console.WriteLine("|| преобразование данных в цикле: {0} секунд",
+            //    sw.Elapsed.TotalSeconds);
+            //sw.Reset();
+
+            //sw.Start();
+            //for (int i = 0; i < data.Length; i++)
+            //    MyTransform(i);
+            //sw.Stop();
+            //Console.WriteLine("Последовательное преобразование данных в цикле: {0} секунд",
+            //    sw.Elapsed.TotalSeconds);
+
+            //Console.WriteLine("Основной поток завершен");
 
             #endregion
 
@@ -269,6 +479,93 @@ namespace MailSender.ConsoleTest
 
 
         }
+
+        static int[] data;
+
+        static void MyTransform(int i)
+        {
+            data[i] = data[i] / 10;
+
+            if (data[i] < 10000) data[i] = 0;
+            if (data[i] >= 10000) data[i] = 100;
+            if (data[i] > 20000) data[i] = 200;
+            if (data[i] > 30000) data[i] = 300;
+        }
+
+
+        /// Методы, исполняемые как задача
+        static void MyMeth()
+        {
+            Console.WriteLine("MyMeth запущен");
+            for (int count = 0; count < 5; count++)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("--> MyMeth Count=" + count);
+            }
+            Console.WriteLine("MyMeth завершен");
+        }
+
+        static void MyMeth2()
+        {
+            Console.WriteLine("MyMeth2 запущен");
+            for (int count = 0; count < 5; count++)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("--> MyMeth2 Count=" + count);
+            }
+            Console.WriteLine("MyMeth2 завершен");
+        }
+
+        static void MyTask3(Object ct)
+        {
+            CancellationToken cancelTok = (CancellationToken)ct;
+            cancelTok.ThrowIfCancellationRequested();
+
+            Console.WriteLine("MyTask3() №{0} запущен", Task.CurrentId);
+
+            for (int count = 0; count < 10; count++)
+            {
+                // Используем опрос
+                if (!cancelTok.IsCancellationRequested)
+                {
+                    Thread.Sleep(500);
+                    Console.WriteLine("В методе MyTask3 №{0} подсчет равен {1}", Task.CurrentId, count);
+                }
+                else
+                {
+                    cancelTok.ThrowIfCancellationRequested();
+                }
+            }
+
+            Console.WriteLine("MyTask3() #{0} завершен", Task.CurrentId);
+        }
+
+        private static AutoResetEvent waitHandle = new AutoResetEvent(false);
+
+        // Метод выполняемый в качестве задачи
+        static void MyTask2()
+        {
+            Console.WriteLine("MyTask2() №{0} запущен", Task.CurrentId);
+
+            for (int count = 0; count < 10; count++)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("В методе MyTask2 №{0} подсчет равен {1}", Task.CurrentId, count);
+            }
+        }
+
+        // Метод выполняемый в качестве задачи
+        static void MyTask1()
+        {
+            Console.WriteLine("MyTask1() запущен");
+
+            for (int count = 0; count < 10; count++)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("В методе MyTask1 подсчет равен " + count);
+            }
+        }
+
 
         static void JobForAThread(object state)
         {
@@ -319,16 +616,16 @@ namespace MailSender.ConsoleTest
                 }
                 catch (ThreadAbortException exc)
                 {
-                    Thread.ResetAbort();
-                    //if ((int)exc.ExceptionState == 0)
-                    //{
-                    //    Console.WriteLine("Прерывание отменено! Код завершения: "
-                    //                      + exc.ExceptionState);
-                    //    Thread.ResetAbort();
-                    //}
-                    //else
-                    //    Console.WriteLine("Поток прерван, код завершения "
-                    //                      + exc.ExceptionState);
+                    //Thread.ResetAbort();
+                    if ((int)exc.ExceptionState == 0)
+                    {
+                        Console.WriteLine("Прерывание отменено! Код завершения: "
+                                          + exc.ExceptionState);
+                        Thread.ResetAbort();
+                    }
+                    else
+                        Console.WriteLine("Поток прерван, код завершения "
+                                          + exc.ExceptionState);
                 }
                 Console.WriteLine(Thrd.Name + " завершен");
             }
