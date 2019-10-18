@@ -61,6 +61,8 @@ namespace MailSender.ViewModel
             services.Register<IServersDataService, ServersDataServiceInMemory>();
             services.Register<IMailMessagesDataService, MailMessagesDataServiceInMemory>();
 
+            services.Register<IMailSenderService, SmtpMailSenderService>();
+
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<MainWindowViewModel>();
         }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using MailSender.Lib.Data;
+using MailMessage = MailSender.Lib.Data.MailMessage;
 
 namespace MailSender.Lib.Services.Interfaces
 {
@@ -54,12 +57,25 @@ namespace MailSender.Lib.Services.Interfaces
         
         public void Send(MailMessage mailMessage, Sender from, Recipient to)
         {
-            throw new NotImplementedException();
+            using (var server = new SmtpClient(_host, _port) { EnableSsl = _useSsl })
+            {
+                server.Credentials = new NetworkCredential(_login, _password);
+                using (var msg = new System.Net.Mail.MailMessage())
+                {
+                    msg.From = new MailAddress(from.Adress, from.Name);
+                    msg.To.Add(new MailAddress(to.Adress, to.Name));
+
+                    server.Send(msg);
+                }
+            }
         }
 
         public void Send(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to)
         {
-            throw new NotImplementedException();
+            foreach (var recipient in to)
+            {
+                Send(mailMessage, from, recipient);
+            }
         }
     }
 }
