@@ -7,9 +7,9 @@ using MailSender.Lib.MVVM;
 
 namespace MailSender.Commands
 {
-    public class SaveDataWithMesageCommand : LamdaCommand
+    public class SaveDataWithMessageCommand : LamdaCommand
     {
-        public SaveDataWithMesageCommand() : base(p => MessageBox.Show("Сохраняем"), p => p != null) { }
+        public SaveDataWithMessageCommand() : base(p => MessageBox.Show("Сохраняем"), p => p != null) { }
        
     }
 }

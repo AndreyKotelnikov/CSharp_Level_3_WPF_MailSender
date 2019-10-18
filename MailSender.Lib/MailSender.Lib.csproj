@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,9 +30,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>MailSender.Lib.Key.pfx</AssemblyOriginatorKeyFile>
@@ -53,6 +55,9 @@
     <Compile Include="Additions\ExtensionMethods.cs" />
     <Compile Include="Additions\StringEncryptor.cs" />
     <Compile Include="DataBase.cs" />
+    <Compile Include="Data\BasedEntities\Entity.cs" />
+    <Compile Include="Data\BasedEntities\Human.cs" />
+    <Compile Include="Data\BasedEntities\NamedEntity.cs" />
     <Compile Include="Data\LINQ2SQL\MailSenderDBContext.cs">
       <DependentUpon>MailSenderDBContext.dbml</DependentUpon>
     </Compile>
@@ -77,8 +82,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\InMemory\DataServiceInMemory.cs" />
+    <Compile Include="Services\InMemory\MailMessagesDataServiceInMemory.cs" />
     <Compile Include="Services\InMemory\RecipientsDataServiceInMemory.cs" />
-    <Compile Include="Services\Linq2SQL\ICRUDDataService.cs" />
+    <Compile Include="Services\InMemory\SendersDataServiceInMemory.cs" />
+    <Compile Include="Services\InMemory\ServersDataServiceInMemory.cs" />
+    <Compile Include="Services\Interfaces\IDataService.cs" />
+    <Compile Include="Services\Interfaces\IEntity.cs" />
+    <Compile Include="Services\Interfaces\IMailMessagesDataService.cs" />
+    <Compile Include="Services\Interfaces\IMailSenderService.cs" />
+    <Compile Include="Services\Interfaces\IRecipientsDataService.cs" />
+    <Compile Include="Services\Interfaces\ISendersDataService.cs" />
+    <Compile Include="Services\Interfaces\IServersDataService.cs" />
+    <Compile Include="Services\Linq2SQL\DataServiceLinq2SQL.cs" />
     <Compile Include="Services\Linq2SQL\RecipientsDataServiceLinq2SQL.cs" />
   </ItemGroup>
   <ItemGroup />

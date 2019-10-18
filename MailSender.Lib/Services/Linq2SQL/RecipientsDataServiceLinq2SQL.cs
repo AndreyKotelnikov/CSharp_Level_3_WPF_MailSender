@@ -1,41 +1,24 @@
-﻿using MailSender.Lib.Data.LINQ2SQL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MailSender.Lib.Additions;
+using MailSender.Lib.Data.BasedEntities;
+using MailSender.Lib.Data.LINQ2SQL;
+using MailSender.Lib.Services.Interfaces;
+using Recipient = MailSender.Lib.Data.Recipient;
+using System.Data.Linq;
 
 namespace MailSender.Lib.Services.Linq2SQL
 {
-    public class RecipientsDataServiceLinq2SQL : ICRUDDataService
+    public class RecipientsDataServiceLinq2SQL : DataServiceLinq2SQL<Recipient, MailSender.Lib.Data.LINQ2SQL.Recipient>, IRecipientsDataService
     {
-        private readonly MailSenderDBContext _db;
-
-        public RecipientsDataServiceLinq2SQL(MailSenderDBContext db)
+        public RecipientsDataServiceLinq2SQL(DataContext dataContext) : base(dataContext)
         {
-            _db = db;
-        }
 
-        public void Create(Recipient item)
-        {
-            if (item.Id != 0) { return; }
-            _db.Recipient.InsertOnSubmit(item);
-            _db.SubmitChanges();
-        }
-
-        public void Delete(Recipient item)
-        {
-            _db.Recipient.DeleteOnSubmit(item);
-            _db.SubmitChanges();
-        }
-
-        public IEnumerable<Recipient> GetAll() => _db.Recipient.ToArray();
-
-        public Recipient GetById(int id) => _db.Recipient.FirstOrDefault(r => r.Id == id);
-
-        public void Update(Recipient item)
-        {
-            _db.SubmitChanges();
         }
     }
+    
 }

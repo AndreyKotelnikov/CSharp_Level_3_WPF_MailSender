@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MailSender.Lib.Data.BasedEntities;
 
 namespace MailSender.Lib.Data
 {
-    public class Sender
-    {
-        public string Name { get; set; }
-
-        public string Adress { get; set; }
-    }
+    public class Sender : Human { }
 }

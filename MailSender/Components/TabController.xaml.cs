@@ -29,16 +29,36 @@ namespace MailSender.Components
 
         public event EventHandler RightButtonClick;
 
+        
+
+        public static readonly DependencyProperty IsLeftButtonVisibleProperty = DependencyProperty.Register(
+            "IsLeftButtonVisible",
+            typeof(bool),
+            typeof(TabController),
+            new PropertyMetadata(default(bool)));
+
         public bool IsLeftButtonVisible
         {
-            get => MoveLeft.Visibility == Visibility.Visible;
-            set => MoveLeft.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            get { return (bool) GetValue(IsLeftButtonVisibleProperty); }
+            set { SetValue(IsLeftButtonVisibleProperty, value); 
+                MoveLeft.Visibility = value ? Visibility.Visible: Visibility.Collapsed; }
         }
+
+
+        public static readonly DependencyProperty IsRightButtonVisibleProperty = DependencyProperty.Register(
+            "IsRightButtonVisible",
+            typeof(bool),
+            typeof(TabController),
+            new PropertyMetadata(default(bool)));
 
         public bool IsRightButtonVisible
         {
-            get => MoveRight.Visibility == Visibility.Visible;
-            set => MoveRight.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            get => (bool)GetValue(IsRightButtonVisibleProperty);
+            set
+            {
+                SetValue(IsRightButtonVisibleProperty, value);
+                MoveRight.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
 

@@ -38,7 +38,8 @@
                 </StackPanel>
       </ControlTemplate>
 
-      <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+      <vm:ViewModelLocator x:Key="Locator"/>
+          
         
       <!--#region ToolBarNewStyle-->
       <!--Переопределил стиль по умолчанию, чтобы скрыть кнопку Overflow: <Grid x:Name="OverflowGrid" Visibility="Collapsed"...-->

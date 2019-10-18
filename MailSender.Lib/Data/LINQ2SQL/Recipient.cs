@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MailSender.Lib.Services.Interfaces;
 
 namespace MailSender.Lib.Data.LINQ2SQL
 {
-    public partial class Recipient : IDataErrorInfo
+    public partial class Recipient : IDataErrorInfo, IEntity
     {
         string IDataErrorInfo.Error => "";
 

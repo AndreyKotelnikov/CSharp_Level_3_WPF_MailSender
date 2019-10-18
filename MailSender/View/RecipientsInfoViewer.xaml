@@ -44,7 +44,7 @@
                   VerticalGridLinesBrush="Gray"
                   SelectedItem="{Binding CurrentRecipient}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" MinWidth="20" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="ID" MinWidth="20" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="ФИО" MinWidth="150" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Email" MinWidth="150" Binding="{Binding Adress}"/>
                 <DataGridTextColumn Header="Комментарий" Width="*" Binding="{Binding Description}"/>

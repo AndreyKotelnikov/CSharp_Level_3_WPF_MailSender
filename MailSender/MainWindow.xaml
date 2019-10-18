@@ -49,7 +49,7 @@
                         </ToolBarTray.Resources>
                         <ToolBar >
                             <Label Content="Сервера"/>
-                            <ComboBox SelectedIndex="0" ItemsSource="{x:Static data:TestData.Servers}">
+                            <ComboBox SelectedIndex="0" ItemsSource="{Binding Servers}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type data:Server}">
                                         <StackPanel Orientation="Horizontal">
@@ -80,7 +80,7 @@
                         </ToolBar>
                         <ToolBar Band="1">
                             <Label Content="Отправители"/>
-                            <ComboBox SelectedIndex="0" ItemsSource="{x:Static data:TestData.Senders}">
+                            <ComboBox SelectedIndex="0" ItemsSource="{Binding Senders}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type data:Sender}">
                                         <StackPanel Orientation="Horizontal">
@@ -199,16 +199,17 @@
             <TabItem Header="Почта">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="309*"/>
+                        <ColumnDefinition Width="847*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" DockPanel.Dock="Top" Header="Письма">
+                    <GroupBox Grid.Column="0" Header="Письма" Grid.ColumnSpan="2">
                         <DockPanel>
                             <UniformGrid DockPanel.Dock="Bottom" Rows="1">
                                 <Button>New</Button>
                                 <Button>Delete</Button>
                             </UniformGrid>
-                            <ListBox x:Name="MessagesList" ItemsSource="{x:Static data:TestData.MailMessages}" SelectedIndex="0">
+                            <ListBox x:Name="MessagesList" ItemsSource="{Binding MailMessages}" SelectedIndex="0">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Subject}" ToolTip="{Binding Body}"/>
@@ -217,7 +218,7 @@
                             </ListBox>
                         </DockPanel>
                     </GroupBox>
-                    <DockPanel Grid.Column="1">
+                    <DockPanel Grid.Column="2">
                         <GroupBox DockPanel.Dock="Top" Header="Тема">
                             <TextBox Text="{Binding  SelectedItem.Subject,  ElementName=MessagesList}"></TextBox>
                         </GroupBox>

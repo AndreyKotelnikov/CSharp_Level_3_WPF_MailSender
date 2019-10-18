@@ -4,13 +4,12 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using MailSender.Lib.Data.BasedEntities;
 
 namespace MailSender.Lib.Data
 {
-    public class Server
+    public class Server : NamedEntity
     {
-        public string Name { get; set; }
-
         public string Adress { get; set; }
 
         public int Port { get; set; }

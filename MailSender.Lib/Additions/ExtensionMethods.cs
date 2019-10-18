@@ -17,12 +17,18 @@ namespace MailSender.Lib.Additions
             return copyObj;
         }
 
-        public static void CloneTo<T>(this T obj, ref T cloneObj) where T : class
+        public static void CloneTo<T, TClone>(this T obj, ref TClone cloneObj) 
         {
-            PropertyInfo[] properties = obj?.GetType().GetProperties();
+            if(cloneObj == null) { throw new NullReferenceException($"Пустая ссылка {nameof(cloneObj)}"); }
+            
+            PropertyInfo[] properties =
+                obj?.GetType().GetProperties() ?? throw new NullReferenceException($"Пустая ссылка {nameof(obj)}");
+
+            PropertyInfo[] propertiesCloneObj = cloneObj.GetType().GetProperties();
+
             foreach (var item in properties)
             {
-                item.SetValue(cloneObj, item.GetValue(obj));
+                propertiesCloneObj.FirstOrDefault(i => i.Name == item.Name)?.SetValue(cloneObj, item.GetValue(obj));
             }
         }
     }

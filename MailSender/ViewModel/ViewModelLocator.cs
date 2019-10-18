@@ -14,9 +14,13 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using MailSender.Lib.Data;
 using MailSender.Lib.Data.LINQ2SQL;
-using MailSender.Lib.Services.Linq2SQL;
 using MailSender.Lib.Services.InMemory;
+using MailSender.Lib.Services.Interfaces;
+using MailSender.Lib.Services.Linq2SQL;
+using MaterialDesignThemes.Wpf;
+using System.Data.Linq;
 
 namespace MailSender.ViewModel
 {
@@ -44,9 +48,18 @@ namespace MailSender.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register(() => new MailSenderDBContext());
-            //SimpleIoc.Default.Register<IRecipientsDataService, RecipientsDataServiceLinq2SQL>();
-            SimpleIoc.Default.Register<ICRUDDataService, RecipientsDataServiceInMemory>();
+            if (!SimpleIoc.Default.IsRegistered<DataContext>())
+            {
+                SimpleIoc.Default.Register(() => new MailSenderDBContext() as DataContext);
+            }
+
+            var services = SimpleIoc.Default;
+
+            services.Register<IRecipientsDataService, RecipientsDataServiceLinq2SQL>();
+            //services.Register<IRecipientsDataService, RecipientsDataServiceInMemory>();
+            services.Register<ISendersDataService, SendersDataServiceInMemory>();
+            services.Register<IServersDataService, ServersDataServiceInMemory>();
+            services.Register<IMailMessagesDataService, MailMessagesDataServiceInMemory>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<MainWindowViewModel>();

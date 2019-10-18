@@ -480,7 +480,7 @@ namespace MailSender.ConsoleTest
 
         }
 
-        static int[] data;
+        static int[] data = null;
 
         static void MyTransform(int i)
         {
@@ -588,7 +588,7 @@ namespace MailSender.ConsoleTest
 
         class MyThread3
         {
-            int num;
+            
             public Thread Thrd;
 
             public MyThread3(string name)

@@ -46,17 +46,17 @@
         <TextBox Grid.Row="1" 
                  Grid.Column="1" 
                  Text="{Binding CurrentRecipient.Name, ValidatesOnExceptions=False, NotifyOnValidationError=True, ValidatesOnDataErrors=True, 
-                        ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                 ToolTip="{Binding CurrentRecipient.ErrorCollection[Name]}"
-                 Validation.ErrorTemplate="{StaticResource ErrorTemplate}">
+                        ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+            <!--ToolTip="{Binding CurrentRecipient.ErrorCollection[Name]}"
+                 Validation.ErrorTemplate="{StaticResource ErrorTemplate}"-->
         </TextBox>
         <TextBox Grid.Row="2" Grid.Column="1">
             <TextBox.Text>
                 <Binding Path="CurrentRecipient.Adress" NotifyOnValidationError="True">
-                    <Binding.ValidationRules>
+                    <!--<Binding.ValidationRules>
                         <vr:RegExValidationRule Pattern="\w+@\W+\.\w+" ErrorMessage="Электронный адрес введён некорректно"/>
                         <ExceptionValidationRule ValidatesOnTargetUpdated="True"/>
-                    </Binding.ValidationRules>
+                    </Binding.ValidationRules>-->
                 </Binding>
             </TextBox.Text>
         </TextBox>
@@ -78,7 +78,7 @@
                     Margin="5"
                     CommandParameter="{Binding CurrentRecipient}">
                 <Button.Command>
-                    <commands:SaveDataWithMesageCommand/>
+                    <commands:SaveDataWithMessageCommand></commands:SaveDataWithMessageCommand>
                 </Button.Command>
             </Button>
         </UniformGrid>
