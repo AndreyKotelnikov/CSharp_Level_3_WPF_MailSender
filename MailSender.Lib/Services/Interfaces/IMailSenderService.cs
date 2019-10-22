@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MailSender.Lib.Data;
 using MailMessage = MailSender.Lib.Data.MailMessage;
@@ -22,6 +23,8 @@ namespace MailSender.Lib.Services.Interfaces
         void Send(MailMessage mailMessage, Sender from, Recipient to);
 
         void Send(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to);
+
+        void ParallelSend(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to);
     }
 
     public class SmtpMailSenderService : IMailSenderService
@@ -54,20 +57,17 @@ namespace MailSender.Lib.Services.Interfaces
             _login = login;
             _password = password;
         }
-        
+
         public void Send(MailMessage mailMessage, Sender from, Recipient to)
         {
-            using (var server = new SmtpClient(_host, _port) { EnableSsl = _useSsl })
+            using var server = new SmtpClient(_host, _port)
             {
-                server.Credentials = new NetworkCredential(_login, _password);
-                using (var msg = new System.Net.Mail.MailMessage())
-                {
-                    msg.From = new MailAddress(from.Adress, from.Name);
-                    msg.To.Add(new MailAddress(to.Adress, to.Name));
+                EnableSsl = _useSsl, Credentials = new NetworkCredential(_login, _password)
+            };
+            using var msg = new System.Net.Mail.MailMessage {From = new MailAddress(@from.Adress, @from.Name)};
+            msg.To.Add(new MailAddress(to.Adress, to.Name));
 
-                    server.Send(msg);
-                }
-            }
+            server.Send(msg);
         }
 
         public void Send(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to)
@@ -76,6 +76,29 @@ namespace MailSender.Lib.Services.Interfaces
             {
                 Send(mailMessage, from, recipient);
             }
+        }
+
+        public void ParallelSend(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to)
+        {
+            //foreach (var recipient in to)
+            //{
+            //    var currentRecipient = recipient;
+            //    new Thread(() => Send(mailMessage, from, currentRecipient))
+            //    {
+            //        Name = $"Поток отправки почты от {from.Adress} к {recipient.Adress}",
+            //        Priority = ThreadPriority.BelowNormal,
+            //        IsBackground = true
+            //    }
+            //        .Start();
+            //}
+
+            foreach (Recipient recipient in to)
+            {
+                var currentRecipient = recipient;
+                ThreadPool.QueueUserWorkItem(p => Send(mailMessage, from, currentRecipient));
+            }
+
+
         }
     }
 }

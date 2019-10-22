@@ -15,6 +15,7 @@ namespace ConsoleDataTest
             MailSenderDBContext dataContext = new MailSenderDBContext("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MailSender.db;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
             RecipientsDataServiceLinq2SQL recipients = new RecipientsDataServiceLinq2SQL(dataContext);
             var res = recipients.GetById(2);
+            Console.ReadLine();
         }
     }
 }

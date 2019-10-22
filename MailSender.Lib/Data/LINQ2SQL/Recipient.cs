@@ -9,7 +9,7 @@ using MailSender.Lib.Services.Interfaces;
 
 namespace MailSender.Lib.Data.LINQ2SQL
 {
-    public partial class Recipient : IDataErrorInfo, IEntity
+    public partial class Recipient : IDataErrorInfo
     {
         string IDataErrorInfo.Error => "";
 

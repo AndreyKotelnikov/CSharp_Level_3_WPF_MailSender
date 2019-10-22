@@ -22,7 +22,7 @@ namespace MailSender.Lib.Services.InMemory
             }
             item.Id = _itemsList.Count == 0 ? 1 : _itemsList.Max(i => i.Id) + 1;
             T newItemInList = new T();
-            item.CloneTo(ref newItemInList);
+            item.CopyValuePropertiesTo(ref newItemInList);
             _itemsList.Add(newItemInList);
         }
 
@@ -52,7 +52,7 @@ namespace MailSender.Lib.Services.InMemory
                 return;
             }
             T itemInList = _itemsList.FirstOrDefault(i => i.Id == item.Id);
-            item.CloneTo(ref itemInList);
+            item.CopyValuePropertiesTo(ref itemInList);
         }
     }
 }
