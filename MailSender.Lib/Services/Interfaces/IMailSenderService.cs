@@ -25,6 +25,10 @@ namespace MailSender.Lib.Services.Interfaces
         void Send(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to);
 
         void ParallelSend(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to);
+
+        Task SendAsync(MailMessage mailMessage, Sender from, Recipient to);
+
+        Task SendAsync(MailMessage mailMessage, Sender from, IEnumerable<Recipient> to, IProgress<double> progress = null, CancellationToken cancellationToken = default);
     }
 
     public class SmtpMailSenderService : IMailSenderService
@@ -97,8 +101,38 @@ namespace MailSender.Lib.Services.Interfaces
                 var currentRecipient = recipient;
                 ThreadPool.QueueUserWorkItem(p => Send(mailMessage, from, currentRecipient));
             }
+        }
 
+        public async Task SendAsync(MailMessage mailMessage, Sender from, Recipient to)
+        {
+            using var server = new SmtpClient(_host, _port)
+            {
+                EnableSsl = _useSsl,
+                Credentials = new NetworkCredential(_login, _password)
+            };
+            using var msg = new System.Net.Mail.MailMessage { From = new MailAddress(@from.Adress, @from.Name) };
+            msg.To.Add(new MailAddress(to.Adress, to.Name));
 
+            await server.SendMailAsync(msg);
+        }
+
+        public async Task SendAsync(MailMessage mailMessage, 
+            Sender from, 
+            IEnumerable<Recipient> to, 
+            IProgress<double> progress = null, 
+            CancellationToken cancellationToken = default
+            )
+        {
+            Recipient[] recipients = to.ToArray();
+
+            for (int i = 0; i < recipients.Length; i++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await SendAsync(mailMessage, from, recipients[1]);
+                progress?.Report((double)(i + 1) / recipients.Length);
+            }
+
+            progress?.Report(1);
         }
     }
 }
