@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleThreads", "ConsoleTh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelApp", "ParallelApp\ParallelApp.csproj", "{8EE5A448-DC9E-4925-94FD-17655AF81E70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTAP", "ConsoleTAP\ConsoleTAP.csproj", "{6AAE8F82-4E49-4372-8A21-AF87DA96772A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{8EE5A448-DC9E-4925-94FD-17655AF81E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EE5A448-DC9E-4925-94FD-17655AF81E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EE5A448-DC9E-4925-94FD-17655AF81E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{F15E83BC-B4BC-4D7F-BE30-095D831F4FF2} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 		{0FC486EE-0732-4570-AD8E-8CADF704A6FD} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 		{8EE5A448-DC9E-4925-94FD-17655AF81E70} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
+		{6AAE8F82-4E49-4372-8A21-AF87DA96772A} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE4AABEC-AD72-4D1B-9245-A21DADE91B4E}

@@ -28,22 +28,37 @@ namespace ConsoleThreads
             //    Thread.Sleep(10);
             //}
 
-            var threads = new Thread[10];
+            //var threads = new Thread[10];
 
-            for (int i = 0; i < 10; i++)
-            {
-                var num = i; // Чтобы не было замыкания переменной
-                threads[i] = new Thread(() => Console.WriteLine($"Сообщение {num}"));
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    var num = i; // Чтобы не было замыкания переменной
+            //    threads[i] = new Thread(() => Console.WriteLine($"Сообщение {num}"));
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                threads[i].Start();
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    threads[i].Start();
+            //}
 
-            
+            Demo();
 
             Console.ReadLine();
+        }
+
+        private static async Task Test()
+        {
+            Thread.Sleep(1000);
+            await Task.Delay(1000);
+            Console.Write("work");
+            await Task.Delay(1000);
+        }
+        private static void Demo()
+        {
+            var child = Test();
+            Console.Write("started");
+            child.Wait();
+            Console.Write("finished");
         }
 
         //[MethodImpl(MethodImplOptions.Synchronized)]

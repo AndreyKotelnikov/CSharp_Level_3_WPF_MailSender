@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace ParallelApp
         {
             //ThreadPool.GetMaxThreads(out int workerThreads, out int completionPortThreads);
             int workerThreads = Environment.ProcessorCount;
+            
             double delta = Math.Floor(number / workerThreads) >= 1
                 ? Math.Floor(number / workerThreads)
                 : 1;
@@ -58,9 +60,11 @@ namespace ParallelApp
 
             numberOfItems = Math.Abs(numberOfItems);
 
+            CountdownEvent countdownEvent = new CountdownEvent(numberOfItems);
+
             double[] stateArray = new double[numberOfItems];
 
-            Semaphore semaphore = new Semaphore(0, numberOfItems + 1);
+            //Semaphore semaphore = new Semaphore(0, numberOfItems + 1);
 
             for (int i = 0; i < numberOfItems; i++)
             {
@@ -74,16 +78,14 @@ namespace ParallelApp
                 {
                     startNumber = delta * (currentI + 1);
                 }
-                ThreadPool.QueueUserWorkItem(p => Factorial(startNumber, delta * currentI, semaphore, out stateArray[currentI]));
+                ThreadPool.QueueUserWorkItem(p => Factorial(startNumber, delta * currentI, countdownEvent, out stateArray[currentI]));
             }
 
             //Thread.Sleep(2000);
 
-            while (stateArray.Any(o => o < Double.Epsilon))
-            {
-                Console.Write(".");
-            }
-            Console.WriteLine();
+            ConcurrentStack<int> interStack = new ConcurrentStack<int>();
+            
+            countdownEvent.Wait();
 
             double result = stateArray.Length > 0 
                 ? 1 
@@ -98,7 +100,7 @@ namespace ParallelApp
 
         }
 
-        private static void Factorial(double number, double limit, Semaphore semaphore, out double result)
+        private static void Factorial(double number, double limit, CountdownEvent countdownEvent, out double result)
         {
             //semaphore.WaitOne();
             double res = 1;
@@ -109,6 +111,8 @@ namespace ParallelApp
             }
 
             result = res;
+
+            countdownEvent.Signal();
             //semaphore.Release();
         }
     }

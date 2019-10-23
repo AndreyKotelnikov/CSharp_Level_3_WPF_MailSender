@@ -79,35 +79,17 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Band="1">
-                            <Label Content="Отправители"/>
-                            <ComboBox SelectedIndex="0" ItemsSource="{Binding Senders}">
-                                <ComboBox.ItemTemplate>
+                            <cmp:ListController LabelName="Отправители"
+                                                ItemsSource="{Binding Senders}">
+                                <cmp:ListController.ItemTemplate>
                                     <DataTemplate DataType="{x:Type data:Sender}">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Name}"/>
                                             <TextBlock Text="{Binding Adress}" Margin="3, 0" Opacity="0.6"/>
                                         </StackPanel>
                                     </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button>
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Icon="Plus" Foreground="GreenYellow"/>
-                                    <TextBlock>Add</TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <Button>
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Icon="Edit" Foreground="DarkBlue"/>
-                                    <TextBlock>Edit</TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <Button>
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Icon="times" Foreground="Red"/>
-                                    <TextBlock>Delete</TextBlock>
-                                </StackPanel>
-                            </Button>
+                                </cmp:ListController.ItemTemplate>
+                            </cmp:ListController>
                         </ToolBar>
                         <ToolBar>
                             <Label ToolBar.OverflowMode="Never">Перейти в планировщик</Label>

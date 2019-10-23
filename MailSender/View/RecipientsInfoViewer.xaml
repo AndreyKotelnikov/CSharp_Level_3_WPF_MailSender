@@ -38,7 +38,7 @@
         
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True" 
-                  ItemsSource="{Binding Recipients}" 
+                  ItemsSource="{Binding Recipients, IsAsync=True}" 
                   GridLinesVisibility="Vertical"
                   AlternatingRowBackground="LightGray"
                   VerticalGridLinesBrush="Gray"
