@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelApp", "ParallelApp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTAP", "ConsoleTAP\ConsoleTAP.csproj", "{6AAE8F82-4E49-4372-8A21-AF87DA96772A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfProgressTest", "WpfProgressTest\WpfProgressTest.csproj", "{14EF52DC-2509-4CB7-908E-455B902F3B1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AAE8F82-4E49-4372-8A21-AF87DA96772A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14EF52DC-2509-4CB7-908E-455B902F3B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14EF52DC-2509-4CB7-908E-455B902F3B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14EF52DC-2509-4CB7-908E-455B902F3B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14EF52DC-2509-4CB7-908E-455B902F3B1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{0FC486EE-0732-4570-AD8E-8CADF704A6FD} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 		{8EE5A448-DC9E-4925-94FD-17655AF81E70} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 		{6AAE8F82-4E49-4372-8A21-AF87DA96772A} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
+		{14EF52DC-2509-4CB7-908E-455B902F3B1D} = {CDE19A78-DB1C-4A82-BECA-D2C047E99265}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE4AABEC-AD72-4D1B-9245-A21DADE91B4E}
