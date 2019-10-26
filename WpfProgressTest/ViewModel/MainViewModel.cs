@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -7,11 +9,93 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using MailSender.Lib.MVVM;
+using Microsoft.Win32;
 
 namespace WpfProgressTest.ViewModel
 {
     public class MainViewModel : MailSender.Lib.MVVM.ViewModel
     {
+        public MainViewModel()
+        {
+            ComputeSummCommand = new LamdaCommand(OnComputeSummExecuteAsync, CanComputeSummExecute);
+            CancelComputeSummCommand = new LamdaCommand(OnCancelComputeSummExecuteAsync, CanCancelComputeSummExecute);
+            OpenFileCommand = new LamdaCommand(OnOpenFileCommandExecute, CanOpenFileCommandExecute);
+        }
+
+
+        private string _text;
+
+        public string Text
+        {
+            get => _text;
+            set => Set(ref _text, value);
+        }
+
+        
+        private bool CanOpenFileCommandExecute(object arg) => true;
+        
+
+        private async void OnOpenFileCommandExecute(object obj)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Выбрать файл для анализа слов",
+                Filter = "Архивы (*.zip)|*.zip|Текстовые файлы (*.txt)|*.txt"
+            };
+
+            if (dialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            var fileName = dialog.FileName;
+
+            switch (Path.GetExtension(fileName).ToLower())
+            {
+                case ".zip":
+                    Text = string.Join("\n",await Task.Run(() => ParseZip(fileName)) );
+                    break;
+                case ".txt":
+                    break;
+            }
+        }
+
+        private async Task<List<string>> ParseZip(string fileName)
+        {
+            //Thread.Sleep(5000);
+            var strList = new List<string>();
+            using (var file = File.OpenRead(fileName))
+            using (var zip = new ZipArchive(file, ZipArchiveMode.Read))
+            {
+                foreach (var zipArchiveEntry in zip.Entries)
+                {
+                    strList.AddRange(await ParseZipEntry(zipArchiveEntry).ConfigureAwait(false));
+                }
+            }
+
+            return strList;
+        }
+
+        private async Task<List<string>> ParseZipEntry(ZipArchiveEntry zipArchiveEntry)
+        {
+            Thread.Sleep(5000);
+            var strList = new List<string>();
+            using (var stream = zipArchiveEntry.Open())
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+                while (!reader.EndOfStream)
+                {
+                    var str = await reader.ReadLineAsync();
+                    strList.Add(str);
+                }
+
+            return strList;
+        }
+
+
+
+
+        #region Progress
+
         private int _result;
 
         public int Result
@@ -35,11 +119,7 @@ namespace WpfProgressTest.ViewModel
 
         public ICommand CancelComputeSummCommand { get; }
 
-        public MainViewModel()
-        {
-            ComputeSummCommand = new LamdaCommand(OnComputeSummExecuteAsync, CanComputeSummExecute);
-            CancelComputeSummCommand = new LamdaCommand(OnCancelComputeSummExecuteAsync, CanCancelComputeSummExecute);
-        }
+        
 
         private void OnCancelComputeSummExecuteAsync(object obj) => _cancellationTokenSource?.Cancel();
 
@@ -65,23 +145,28 @@ namespace WpfProgressTest.ViewModel
 
             try
             {
-               Result = await task;
+                Result = await task;
+            }
+            catch (OperationCanceledException e)
+            {
+                Task.Run(() => MessageBox.Show(e.Message, "Error:"));
+                Result = 0;
+                ComputeProgress = 0;
             }
             catch (AggregateException e)
             {
                 foreach (Exception exception in e.InnerExceptions)
                 {
-                    if (exception is OperationCanceledException || exception?.InnerException is OperationCanceledException)
+                    if (exception is OperationCanceledException /*|| exception?.InnerException is OperationCanceledException*/)
                     {
                         Result = 0;
                         ComputeProgress = 0;
-                        //CommandManager.InvalidateRequerySuggested();
                     }
                     else
                     {
                         Task.Run(() => MessageBox.Show(exception.Message, "Error:"));
                     }
-               }
+                }
             }
             _canComputeSummExecute = true;
             _cancellationTokenSource = null;
@@ -97,18 +182,27 @@ namespace WpfProgressTest.ViewModel
         private static int ComputeSumm(int end, int delay, CancellationToken cancellationToken = default, IProgress<(double, int)> progress = null)
         {
             var result = 0;
-            //ParallelOptions parallelOptions = new ParallelOptions();
-            //parallelOptions.CancellationToken = cancellationToken;
+            ParallelOptions parallelOptions = new ParallelOptions();
+            parallelOptions.CancellationToken = cancellationToken;
+            ParallelLoopResult loopResult;
 
-            Parallel.For(1,
+            loopResult = Parallel.For(1,
                 end + 1,
+                parallelOptions,
                 (i, s) =>
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    //if (cancellationToken.IsCancellationRequested)
+                    //{
+                    //    s.Stop();
+                    //}
+                    //cancellationToken.ThrowIfCancellationRequested();
                     Interlocked.Add(ref result, i);
-                    Task.Delay(delay, cancellationToken).Wait();
+                    Task.Delay(delay).Wait();
                     progress?.Report(((double)1 / end, result));
                 });
+           
+
+            
 
             //for (int i = 0; i <= end; i++)
             //{
@@ -120,5 +214,10 @@ namespace WpfProgressTest.ViewModel
             //throw new ArgumentNullException("progress", "Finished");
             return result;
         }
+
+        #endregion
+
+        public ICommand OpenFileCommand { get; }
+
     }
 }

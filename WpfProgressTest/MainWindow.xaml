@@ -11,6 +11,12 @@
         <vm:MainViewModel/>
     </Window.DataContext>
     <StackPanel>
+        <Menu>
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть" 
+                          Command="{Binding OpenFileCommand}"/>
+            </MenuItem>
+        </Menu>
         <Label Content="{Binding Result}"
                HorizontalContentAlignment="Center"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -21,11 +27,15 @@
                     Margin="10"
                     Command="{Binding CancelComputeSummCommand}"/>
         </StackPanel>
+        <TextBlock Text="{Binding ComputeProgress, StringFormat={}{0:F2}  }"
+               HorizontalAlignment="Center"/>
         <ProgressBar Height="30" 
                      Width="600" 
                      Margin="10"
                      Value="{Binding ComputeProgress}"
-                     Maximum="1"/>
+                     Maximum="1"
+                     />
+        <TextBox Text="{Binding Text}"/>
         
     </StackPanel>
 </Window>
