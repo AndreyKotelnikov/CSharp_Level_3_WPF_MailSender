@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelFirstData.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelFirstDataStoreContainer">
+    <EntitySet Name="ArtistMFMFSet" EntityType="ModelFirstData.Store.ArtistMFMFSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SongMFMFSet" EntityType="ModelFirstData.Store.SongMFMFSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SongMFMFArtistMFMF" EntityType="ModelFirstData.Store.SongMFMFArtistMFMF" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_SongMFMFArtistMFMF_SongMFMF" Association="ModelFirstData.Store.FK_SongMFMFArtistMFMF_SongMFMF">
+      <End Role="SongMFMF" EntitySet="SongMFMFSet" />
+      <End Role="SongMFMFArtistMFMF" EntitySet="SongMFMFArtistMFMF" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongMFMFArtistMFMF_ArtistMFMF" Association="ModelFirstData.Store.FK_SongMFMFArtistMFMF_ArtistMFMF">
+      <End Role="ArtistMFMF" EntitySet="ArtistMFMFSet" />
+      <End Role="SongMFMFArtistMFMF" EntitySet="SongMFMFArtistMFMF" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ArtistMFMFSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SongMFMFSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lenght" Type="float" Nullable="false" DefaultValue="1.5" />
+    <Property Name="Discription" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SongMFMFArtistMFMF">
+    <Key>
+      <PropertyRef Name="SongMFMF_Id" />
+      <PropertyRef Name="ArtistMFMF_Id" />
+    </Key>
+    <Property Name="SongMFMF_Id" Type="int" Nullable="false" />
+    <Property Name="ArtistMFMF_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_SongMFMFArtistMFMF_SongMFMF">
+    <End Role="SongMFMF" Type="ModelFirstData.Store.SongMFMFSet" Multiplicity="1" />
+    <End Role="SongMFMFArtistMFMF" Type="ModelFirstData.Store.SongMFMFArtistMFMF" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SongMFMF">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SongMFMFArtistMFMF">
+        <PropertyRef Name="SongMFMF_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongMFMFArtistMFMF_ArtistMFMF">
+    <End Role="SongMFMFArtistMFMF" Type="ModelFirstData.Store.SongMFMFArtistMFMF" Multiplicity="*" />
+    <End Role="ArtistMFMF" Type="ModelFirstData.Store.ArtistMFMFSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ArtistMFMF">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SongMFMFArtistMFMF">
+        <PropertyRef Name="ArtistMFMF_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModelFirstData" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelFirstDataContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ArtistMFMFSet" EntityType="ModelFirstData.ArtistMFMF" />
+          <EntitySet Name="SongMFMFSet" EntityType="ModelFirstData.SongMFMF" />
+          <AssociationSet Name="SongMFMFArtistMFMF" Association="ModelFirstData.SongMFMFArtistMFMF">
+            <End Role="SongMFMF" EntitySet="SongMFMFSet" />
+            <End Role="ArtistMFMF" EntitySet="ArtistMFMFSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ArtistMFMF">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="SongMFMF" Relationship="ModelFirstData.SongMFMFArtistMFMF" FromRole="ArtistMFMF" ToRole="SongMFMF" />
+        </EntityType>
+        <EntityType Name="SongMFMF">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Lenght" Type="Double" Nullable="false" DefaultValue="1.5" />
+          <Property Name="Discription" Type="String" Nullable="true" />
+          <NavigationProperty Name="ArtistMFMF" Relationship="ModelFirstData.SongMFMFArtistMFMF" FromRole="SongMFMF" ToRole="ArtistMFMF" />
+        </EntityType>
+        <Association Name="SongMFMFArtistMFMF">
+          <End Type="ModelFirstData.SongMFMF" Role="SongMFMF" Multiplicity="*" />
+          <End Type="ModelFirstData.ArtistMFMF" Role="ArtistMFMF" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelFirstDataStoreContainer" CdmEntityContainer="ModelFirstDataContainer">
+    <EntitySetMapping Name="ArtistMFMFSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirstData.ArtistMFMF)">
+        <MappingFragment StoreEntitySet="ArtistMFMFSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SongMFMFSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelFirstData.SongMFMF)">
+        <MappingFragment StoreEntitySet="SongMFMFSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Lenght" ColumnName="Lenght" />
+          <ScalarProperty Name="Discription" ColumnName="Discription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SongMFMFArtistMFMF" TypeName="ModelFirstData.SongMFMFArtistMFMF" StoreEntitySet="SongMFMFArtistMFMF">
+      <EndProperty Name="SongMFMF">
+        <ScalarProperty Name="Id" ColumnName="SongMFMF_Id" />
+      </EndProperty>
+      <EndProperty Name="ArtistMFMF">
+        <ScalarProperty Name="Id" ColumnName="ArtistMFMF_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

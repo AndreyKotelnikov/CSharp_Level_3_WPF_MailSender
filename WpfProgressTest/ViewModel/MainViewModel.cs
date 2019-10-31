@@ -182,8 +182,7 @@ namespace WpfProgressTest.ViewModel
         private static int ComputeSumm(int end, int delay, CancellationToken cancellationToken = default, IProgress<(double, int)> progress = null)
         {
             var result = 0;
-            ParallelOptions parallelOptions = new ParallelOptions();
-            parallelOptions.CancellationToken = cancellationToken;
+            ParallelOptions parallelOptions = new ParallelOptions {CancellationToken = cancellationToken};
             ParallelLoopResult loopResult;
 
             loopResult = Parallel.For(1,
