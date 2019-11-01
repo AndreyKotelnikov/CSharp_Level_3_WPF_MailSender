@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using MailSender.Lib.Additions;
@@ -13,27 +14,42 @@ namespace MailSender.Lib.Services.InMemory
     {
         protected  readonly List<T> _itemsList = new List<T>();
         
-        public void Create(T item)
+        public int Create(T item)
         {
             if (item is null) { throw new NullReferenceException("Пустая ссылка"); }
             if (item.Id != 0)
             {
-                return;
+                return 0;
             }
             item.Id = _itemsList.Count == 0 ? 1 : _itemsList.Max(i => i.Id) + 1;
             T newItemInList = new T();
             item.CopyValuePropertiesTo(ref newItemInList);
             _itemsList.Add(newItemInList);
+            return newItemInList.Id;
         }
 
-        public void Delete(T item)
+        public async Task<int> CreateAsync(T item) => await Task.Run(() => Create(item));
+
+
+        public bool Delete(int id)
         {
-            if (item is null) { throw new NullReferenceException("Пустая ссылка");}
+            T itemInList = _itemsList.FirstOrDefault(i => i.Id == id);
 
-            _itemsList.Remove(_itemsList.FirstOrDefault(i => i.Id == item.Id));
+            if (itemInList == null)
+            {
+                return false;
+            }
+
+            _itemsList.Remove(itemInList);
+            return true;
         }
+
+        public async Task<bool> DeleteAsync(int id) => await Task.Run(() => Delete(id));
+        
 
         public IEnumerable<T> GetAll() => _itemsList;
+
+        public async Task<IEnumerable<T>> GetAllAsync() => await Task.Run(() => GetAll());
         
 
         public T GetById(int id)
@@ -43,16 +59,25 @@ namespace MailSender.Lib.Services.InMemory
             return _itemsList.FirstOrDefault(i => i.Id == id);
         }
 
-        public void Update(T item)
+        public async Task<T> GetByIdAsync(int id) => await Task.Run(() => GetById(id));
+        
+
+        public T Update(int id, T item)
         {
             if (item is null) { throw new NullReferenceException("Пустая ссылка"); }
 
-            if (!_itemsList.Select(r => r.Id).Contains(item.Id))
+            if (_itemsList.All(i => i.Id != id))
             {
-                return;
+                return null;
             }
-            T itemInList = _itemsList.FirstOrDefault(i => i.Id == item.Id);
+            T itemInList = _itemsList.First(i => i.Id == id);
             item.CopyValuePropertiesTo(ref itemInList);
+            T result = new T();
+            itemInList.CopyValuePropertiesTo(ref result);
+            return result;
         }
+
+        public async Task<T> UpdateAsync(int id, T item) => await Task.Run(() => Update(id, item));
+        
     }
 }

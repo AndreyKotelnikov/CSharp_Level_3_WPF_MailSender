@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using System.Data.Entity;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using MailSender.Lib.Data;
@@ -21,6 +22,7 @@ using MailSender.Lib.Services.Interfaces;
 using MailSender.Lib.Services.Linq2SQL;
 using MaterialDesignThemes.Wpf;
 using System.Data.Linq;
+using MailSender.Lib.EF;
 
 namespace MailSender.ViewModel
 {
@@ -51,10 +53,12 @@ namespace MailSender.ViewModel
             if (!SimpleIoc.Default.IsRegistered<DataContext>())
             {
                 SimpleIoc.Default.Register(() => new MailSenderDBContext() as DataContext);
+                //SimpleIoc.Default.Register(() => new MailSenderDB() as DbContext);
             }
 
             var services = SimpleIoc.Default;
 
+            //services.Register<IRecipientsDataService, RecipientsDataServiceEF>();
             services.Register<IRecipientsDataService, RecipientsDataServiceLinq2SQL>();
             //services.Register<IRecipientsDataService, RecipientsDataServiceInMemory>();
             services.Register<ISendersDataService, SendersDataServiceInMemory>();

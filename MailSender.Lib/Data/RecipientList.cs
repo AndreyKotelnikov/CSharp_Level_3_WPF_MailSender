@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MailSender.Lib.Data.BasedEntities;
-using MailSender.Lib.Services.Interfaces;
 
 namespace MailSender.Lib.Data
 {
-    public class Recipient : Human
+    public class RecipientsList : NamedEntity
     {
-        public virtual ICollection<RecipientsList> Lists { get; set; }
+        public virtual ICollection<Recipient> Recipients { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MailSender.Lib.Data.BasedEntities;
 
 namespace MailSender.Lib.Services.Interfaces
@@ -7,12 +8,22 @@ namespace MailSender.Lib.Services.Interfaces
     {
         IEnumerable<T> GetAll();
 
+        Task<IEnumerable<T>> GetAllAsync();
+
         T GetById(int id);
 
-        void Create(T item);
+        Task<T> GetByIdAsync(int id);
 
-        void Update(T item);
+        int Create(T item);
 
-        void Delete(T item);
+        Task<int> CreateAsync(T item);
+
+        T Update(int id, T item);
+
+        Task<T> UpdateAsync(int id, T item);
+
+        bool Delete(int id);
+
+        Task<bool> DeleteAsync(int id);
     }
 }

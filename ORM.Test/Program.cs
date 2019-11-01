@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ORM.Test.Data;
+
 using ORM.Test.Reporting;
 
 namespace ORM.Test
@@ -109,9 +110,12 @@ namespace ORM.Test
             //    Console.WriteLine($@"{codeFirst.Songs.Count()} ");
             //}
 
-            var report = new Report();
+            //var report = new Report();
 
-            report.CreatePackage("TestReport.docx");
+            //report.CreatePackage("TestReport.docx");
+
+            //Configuration configuration = new Configuration();
+            //configuration.
 
             Console.ReadLine();
         }

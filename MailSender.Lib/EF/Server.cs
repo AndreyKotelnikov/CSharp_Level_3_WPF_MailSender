@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security;
 using MailSender.Lib.Data.BasedEntities;
 
-namespace MailSender.Lib.Data
+namespace MailSender.Lib.EF
 {
     public class Server : NamedEntity
     {
@@ -18,8 +13,8 @@ namespace MailSender.Lib.Data
 
         public string UserName { get; set; }
 
-        public SecureString Password { get; set; }
+        public string Password { get; set; }
 
-        
+        public string SecretName { get; set; }
     }
 }

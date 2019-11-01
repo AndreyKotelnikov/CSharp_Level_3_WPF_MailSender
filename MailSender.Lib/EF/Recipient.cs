@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MailSender.Lib.Data.BasedEntities;
-using MailSender.Lib.Services.Interfaces;
 
-namespace MailSender.Lib.Data
+namespace MailSender.Lib.EF
 {
     public class Recipient : Human
     {

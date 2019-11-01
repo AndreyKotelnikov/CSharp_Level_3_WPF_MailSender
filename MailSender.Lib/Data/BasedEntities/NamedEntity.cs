@@ -1,4 +1,6 @@
-﻿namespace MailSender.Lib.Data.BasedEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MailSender.Lib.Data.BasedEntities
 {
     /// <summary>
     /// Именованная сущность
@@ -8,6 +10,7 @@
         /// <summary>
         /// Наименование
         /// </summary>
+        [Required, MaxLength(120)]
         public string Name { get; set; }
     }
 }

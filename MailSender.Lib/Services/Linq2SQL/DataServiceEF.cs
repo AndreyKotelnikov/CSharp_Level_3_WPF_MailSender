@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Linq;
 using System.Linq;
 using System.Reflection;
@@ -10,25 +11,28 @@ using MailSender.Lib.Services.Interfaces;
 
 namespace MailSender.Lib.Services.Linq2SQL
 {
-    public abstract class DataServiceLinq2SQL<T, TDb> : IDataService<T>
+    //DataServiceLinq2SQL
+    public abstract class DataServiceEF<T, TDb> : IDataService<T>
         where T : Entity, new()
         where TDb : class, IEntity, new()
     {
-        protected readonly DataContext _db;
+        protected readonly DbContext _db;
 
-        protected readonly Table<TDb> _table;
+        protected readonly DbSet<TDb> _table;
 
         //public System.IO.TextWriter Log { get; set; }
 
-        protected DataServiceLinq2SQL(DataContext db)
+            protected DataServiceEF(DbContext db)
         {
             _db = db ?? throw new NullReferenceException($"Пустая ссылка {nameof(db)}");
 
-            PropertyInfo property = db.GetType().GetProperty(typeof(TDb).Name)
-                                    ?? throw new NullReferenceException(
-                                        $"Таблица {typeof(TDb).Name} отсутствует в объекте {nameof(db)}");
+            //PropertyInfo property = db.GetType().GetProperty(typeof(TDb).Name) 
+            //                        ?? throw new NullReferenceException(
+            //                            $"Таблица {typeof(TDb).Name} отсутствует в объекте {nameof(db)}");
 
-            _table = property.GetValue(db) as Table<TDb>;
+            //_table = property.GetValue(db) as DbSet<TDb>;
+            _table = db.Set<TDb>() ?? throw new NullReferenceException(
+                                        $"Таблица {typeof(TDb).Name} отсутствует в объекте {nameof(db)}");
         }
 
         public T GetById(int id)
@@ -37,7 +41,7 @@ namespace MailSender.Lib.Services.Linq2SQL
             {
                 throw new ArgumentOutOfRangeException(nameof(id), id, "id должен быть больше нуля");
             }
-
+            
             if (!_table.Any(i => i.Id == id))
             {
                 throw new ArgumentNullException(nameof(id), $"Элемент с Id = {id} не найден в базе данных");
@@ -66,19 +70,19 @@ namespace MailSender.Lib.Services.Linq2SQL
             item.Id = _table.Any() ? _table.Max(i => i.Id) + 1 : 1;
             TDb newItemInList = new TDb();
             item.CopyValuePropertiesTo(ref newItemInList);
-            _table.InsertOnSubmit(newItemInList);
-            _db.SubmitChanges();
+            _table.Add(newItemInList);
+            _db.SaveChanges();
             return newItemInList.Id;
         }
 
         public bool Delete(int id)
         {
 
-            _table.DeleteOnSubmit(_table.FirstOrDefault(i => i.Id == id)
+            _table.Remove(_table.FirstOrDefault(i => i.Id == id)
                                   ?? throw new ArgumentNullException(nameof(id),
                                       $"Элемент с Id = {id} не найден в базе данных"));
-            _db.SubmitChanges();
-            return true;
+            
+            return _db.SaveChanges() > 0;
         }
 
         public IEnumerable<T> GetAll()
@@ -106,7 +110,7 @@ namespace MailSender.Lib.Services.Linq2SQL
 
             TDb itemInList = _table.First(i => (i as IEntity).Id == id);
             item.CopyValuePropertiesTo(ref itemInList);
-            _db.SubmitChanges();
+            _db.SaveChanges();
             T result = new T();
             itemInList.CopyValuePropertiesTo(ref result);
             return result;

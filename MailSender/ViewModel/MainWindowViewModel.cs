@@ -53,7 +53,7 @@ namespace MailSender.ViewModel
 
             UpdateDataCommand = new RelayCommand(UpdateData, CanExecute);
             CreateDataCommand = new RelayCommand(OnCreateDataCommandExcuted, CanExecute);
-            SaveDataCommand = new RelayCommand<Recipient>(o => _recipientsDataService.Update(o), CanSave, true);
+            SaveDataCommand = new RelayCommand<Recipient>(o => _recipientsDataService.Update(o.Id, o), CanSave, true);
             //UpdateData();
         }
         
@@ -124,6 +124,7 @@ namespace MailSender.ViewModel
         {
             Recipient newRecipient = new Recipient()
             {
+                Id = 0,
                 Name = string.Empty,
                 Adress = string.Empty
             };
