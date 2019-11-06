@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,22 @@ namespace MailSender.Lib.EF
         public DbSet<RecipientsList> Lists { get; set; }
 
         public DbSet<SchedulerTask> SchedulerTasks { get; set; }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    // настройка полей с помощью Fluent API
+        //    modelBuilder.Entity<Recipient>()
+        //        .Property(c => c.Name).IsRequired().HasMaxLength(30);
+
+        //    modelBuilder.Entity<Server>().Property(s => s.SecretName).IsRequired().HasColumnName("Сервер");
+
+        //    DbQuery dbQuery = Set<Recipient>().
+
+        //    //modelBuilder.Entity<Customer>()
+        //    //    .Property(c => c.Photo).HasColumnType("image");
+
+        //    //// вы можете настроить таблицу
+        //    //modelBuilder.Entity<Customer>().ToTable("NewName_Customer");
+        //}
     }
 }

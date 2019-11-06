@@ -47,7 +47,15 @@ namespace MailSender.Lib.Services.Linq2SQL
                 throw new ArgumentNullException(nameof(id), $"Элемент с Id = {id} не найден в базе данных");
             }
 
+            //_table.Load();
+            //_db.Entry(_table.Local)
+            //    .Collection(c => c).
+            //    .Load();
+
             //_db.Log = Console.Out;
+
+            
+
             var item = new T();
             TDb itemDb = _table.FirstOrDefault(i => (i as IEntity).Id == id);
 
